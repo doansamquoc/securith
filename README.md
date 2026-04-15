@@ -28,7 +28,8 @@ Visit this repository and follow the documentation [securith-contract](https://g
 ### Running App Locally
 
 1. Configure environment variables <br>
-   Copy and edit:
+
+Copy and edit:
 
 ```bash
 cp .env.example .env
