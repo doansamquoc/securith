@@ -1,16 +1,21 @@
-import { useAuthStore } from '@/store/auth.store'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { Spinner } from "@/components/ui/spinner";
+import { client } from "@/lib/thirdweb";
+import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
+import { useActiveAccount, useAutoConnect } from "thirdweb/react";
 
-export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: ({ location }) => {
-    const { isAuthenticated } = useAuthStore.getState()
-    if (!isAuthenticated) {
-      throw redirect({ to: "/login", search: { redirect: location.href } })
-    }
-  },
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/_authenticated")({
+  component: AuthenticatedLayout,
+});
 
-function RouteComponent() {
-  return <div>Hello "/_authenticated"!</div>
+function AuthenticatedLayout() {
+  const account = useActiveAccount();
+  const { isLoading: isAutoConnecting } = useAutoConnect({ client });
+
+  if (isAutoConnecting) {
+    return <Spinner />;
+  }
+  if (!account) {
+    return <Navigate to="/login" />;
+  }
+  return <Outlet />;
 }
