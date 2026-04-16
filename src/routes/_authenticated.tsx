@@ -5,7 +5,7 @@ export const Route = createFileRoute('/_authenticated')({
   beforeLoad: ({ location }) => {
     const { isAuthenticated } = useAuthStore.getState()
     if (!isAuthenticated) {
-      throw redirect({ to: "/auth/login", search: { redirect: location.href } })
+      throw redirect({ to: "/login", search: { redirect: location.href } })
     }
   },
   component: RouteComponent,
