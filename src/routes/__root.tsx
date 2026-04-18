@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
 interface MyRouterContext {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
+  isAutoConnecting: boolean;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({

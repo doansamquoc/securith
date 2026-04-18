@@ -3,100 +3,94 @@ import UserNav from "@/components/user-nav";
 import { Link } from "@tanstack/react-router";
 import { useActiveAccount } from "thirdweb/react";
 import { Button } from "@/components/ui/button";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from "@/components/ui/sheet";
-import { Menu, ShieldCheck } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 const Header = () => {
   const account = useActiveAccount();
 
   const navLinks = account
     ? [
-        { label: "Dashboard", href: "/dashboard", active: true },
-        { label: "My Polls", href: "/dashboard", active: false },
+        { label: "Bảng điều khiển", href: "/dashboard" },
+        { label: "Tạo chiến dịch", href: "/create" },
       ]
     : [
-        { label: "Features", href: "/", active: false },
-        { label: "Transparency", href: "/", active: false },
+        { label: "Tính năng", href: "/#features" },
+        { label: "Minh bạch", href: "/#transparency" },
       ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 px-4 h-16">
-      <div className="container mx-auto h-full flex items-center justify-between">
-        {/* Left Side: User Dropdown or Login */}
-        <div className="flex items-center gap-4">
-          {account ? (
-            <UserNav />
-          ) : (
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/login">Sign In</Link>
-            </Button>
-          )}
-        </div>
-
-        {/* Right Side: Desktop Nav & Logo */}
+    <header className="sticky top-0 z-50 w-full border-b border-border/30 bg-background/80 backdrop-blur-md h-16">
+      <div className="container mx-auto h-full flex items-center justify-between px-4">
         <div className="flex items-center gap-8">
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <Link to="/" className="flex items-center gap-2">
+            <Logo />
+            <span className="font-medium tracking-tight text-lg">Securith</span>
+          </Link>
+          
+          <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.href as any}
-                className={`transition-colors hover:text-foreground/80 ${
-                  link.active ? "text-foreground" : "text-muted-foreground"
-                }`}
+                className="text-sm font-light text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
+        </div>
 
-          {/* Desktop Logo */}
-          <div className="hidden md:block">
-            <Logo />
-          </div>
+        <div className="flex items-center gap-4">
+          {account ? (
+            <UserNav />
+          ) : (
+            <div className="hidden md:flex items-center gap-2">
+              <Button variant="ghost" size="sm" asChild className="text-muted-foreground font-light hover:text-foreground">
+                <Link to="/login">Đăng nhập</Link>
+              </Button>
+              <Button size="sm" variant="outline" className="border-border/50 font-light" asChild>
+                <Link to="/login">Bắt đầu</Link>
+              </Button>
+            </div>
+          )}
 
-          {/* Mobile Navigation (Sheet) */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-9 px-3 gap-2 flex items-center">
-                  <Menu className="h-5 w-5 text-muted-foreground" />
-                  <span className="font-medium">Menu</span>
+                <Button variant="ghost" size="icon" className="text-muted-foreground">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                <SheetHeader className="text-left">
-                  <SheetTitle className="flex items-center gap-2">
+              <SheetContent side="right" className="w-[300px] border-l border-border/30">
+                <SheetHeader className="text-left pb-6">
+                  <SheetTitle className="flex items-center gap-2 text-lg">
                     <Logo />
-                    <span className="font-bold text-xl tracking-tight">Securith</span>
+                    <span className="font-medium tracking-tight">Securith</span>
                   </SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col gap-4 mt-8">
+                <div className="flex flex-col gap-2 mt-2">
                   {navLinks.map((link) => (
                     <Button
                       key={link.label}
                       variant="ghost"
-                      className="justify-start font-medium text-lg h-12 px-2"
+                      className="justify-start text-sm font-light h-10"
                       asChild
                     >
                       <Link to={link.href as any}>{link.label}</Link>
                     </Button>
                   ))}
-                </div>
-                <div className="absolute bottom-8 left-6 right-6 p-6 bg-muted/50 rounded-2xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="h-5 w-5 text-primary" />
-                    <span className="font-bold">Secure Voting</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Powered by blockchain technology for absolute transparency and trust.
-                  </p>
+                  {!account && (
+                    <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/30">
+                      <Button variant="ghost" className="justify-start text-sm font-light h-10" asChild>
+                        <Link to="/login">Đăng nhập</Link>
+                      </Button>
+                      <Button variant="outline" className="justify-start text-sm font-light h-10 border-border/50" asChild>
+                        <Link to="/login">Bắt đầu</Link>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

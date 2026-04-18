@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Filter, Users, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 interface Poll {
   id: string;
@@ -66,7 +67,7 @@ export const PollsSection = () => {
   });
 
   return (
-    <section className="py-12" id="explore">
+    <section className="py-24 bg-background" id="explore">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 px-6">
         <div className="space-y-4 max-w-lg">
           <h2 className="text-4xl font-bold tracking-tight">Active Polls</h2>
@@ -137,14 +138,21 @@ export const PollsSection = () => {
               </div>
             </CardContent>
             <CardFooter className="pt-0">
-              <Button className="w-full mt-4 group/btn" variant={poll.status === "Active" ? "default" : "secondary"} disabled={poll.status !== "Active"}>
-                {poll.status === "Active" ? (
-                  <>Vote Now <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" /></>
-                ) : poll.status === "Ended" ? (
-                  <>View Results <CheckCircle2 className="ml-2 h-4 w-4" /></>
-                ) : (
-                  <>Register to Vote</>
-                )}
+              <Button 
+                className="w-full mt-4 group/btn" 
+                variant={poll.status === "Active" ? "default" : "secondary"} 
+                disabled={poll.status !== "Active" && poll.status !== "Ended"}
+                asChild
+              >
+                <Link to="/polls/$pollId" params={{ pollId: poll.id }}>
+                  {poll.status === "Active" ? (
+                    <>Vote Now <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" /></>
+                  ) : poll.status === "Ended" ? (
+                    <>View Results <CheckCircle2 className="ml-2 h-4 w-4" /></>
+                  ) : (
+                    <>Register to Vote</>
+                  )}
+                </Link>
               </Button>
             </CardFooter>
           </Card>

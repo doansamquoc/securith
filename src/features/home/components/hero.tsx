@@ -1,33 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <section className="relative py-20 lg:py-32 overflow-hidden bg-background">
+    <section className="relative pt-20 pb-24 overflow-hidden bg-background flex flex-col items-center justify-center min-h-[60vh]">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center space-y-8">
-          <div className="inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium bg-muted/50">
-            <span className="text-primary mr-2">New</span> Secure Voting on Base Sepolia
+        <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 rounded-md border border-border/50 px-3 py-1 text-[10px] uppercase tracking-widest text-muted-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <span>Nền tảng bầu chọn Blockchain</span>
           </div>
-          <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight leading-none">
-            Decentralized Polling <br />
-            <span className="text-primary">Made Simple & Secure</span>
+
+          <h1 className="text-4xl md:text-6xl font-medium tracking-tight text-foreground animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+            Minh bạch tuyệt đối
+            <br />
+            <span className="text-muted-foreground font-light">Cho mọi cuộc bầu cử.</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Securith leverages blockchain technology to ensure every vote is transparent, 
-            immutable, and verified. No middlemen, no tampering.
+
+          <p className="text-base md:text-lg text-muted-foreground max-w-md mx-auto font-light animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+            Securith ứng dụng Blockchain đảm bảo sự minh bạch, xác thực và chống giả mạo cho mọi cuộc bầu chọn.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="h-12 px-8 text-base font-semibold" asChild>
-              <Link to="/login">Get Started Free</Link>
+
+          <div className="flex items-center justify-center gap-3 w-full sm:w-auto pt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-500">
+            <Button size="sm" className="font-light" asChild>
+              <Link to="/login">
+                Bắt đầu ngay
+                <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 text-base font-semibold">
-              Explore Polls
+            <Button size="sm" variant="ghost" className="font-light" asChild>
+              <a href="#explore">Khám phá</a>
             </Button>
           </div>
         </div>
       </div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10" />
     </section>
   );
 };

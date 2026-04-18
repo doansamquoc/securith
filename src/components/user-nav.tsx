@@ -16,8 +16,18 @@ import {
 import { useUser } from "@/hooks/use-user";
 import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { ChevronDown, LogOut, Settings, User, CreditCard, Bell, Sun, Moon, Monitor, Check } from "lucide-react";
 import { useTheme } from "./theme-provider";
+import {
+  IconBell,
+  IconCheck,
+  IconChevronDown,
+  IconDeviceDesktop,
+  IconLogout,
+  IconMoon,
+  IconSettings,
+  IconSun,
+  IconUserCircle,
+} from "@tabler/icons-react";
 
 const UserNav = () => {
   const account = useActiveAccount();
@@ -32,16 +42,15 @@ const UserNav = () => {
   const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
 
   const menuItems = [
-    { label: "Profile", icon: User },
-    { label: "Billing", icon: CreditCard },
-    { label: "Settings", icon: Settings },
-    { label: "Notifications", icon: Bell },
+    { label: "Profile", icon: IconUserCircle },
+    { label: "Settings", icon: IconSettings },
+    { label: "Notifications", icon: IconBell },
   ];
 
   const themeOptions = [
-    { label: "Light", value: "light", icon: Sun },
-    { label: "Dark", value: "dark", icon: Moon },
-    { label: "System", value: "system", icon: Monitor },
+    { label: "Light", value: "light", icon: IconSun },
+    { label: "Dark", value: "dark", icon: IconMoon },
+    { label: "System", value: "system", icon: IconDeviceDesktop },
   ];
 
   return (
@@ -61,7 +70,7 @@ const UserNav = () => {
               {wallet?.id === "inApp" ? "Smart Account" : "External Wallet"}
             </span>
           </div>
-          <ChevronDown className="h-4 w-4 text-muted-foreground" />
+          <IconChevronDown className="h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
@@ -90,8 +99,8 @@ const UserNav = () => {
           <DropdownMenuGroup>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <Sun className="mr-2 h-4 w-4 dark:hidden" />
-                <Moon className="mr-2 h-4 w-4 hidden dark:block" />
+                <IconSun className="mr-2 h-4 w-4 dark:hidden" />
+                <IconMoon className="mr-2 h-4 w-4 hidden dark:block" />
                 <span>Theme</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
@@ -106,7 +115,7 @@ const UserNav = () => {
                         <option.icon className="mr-2 h-4 w-4" />
                         <span>{option.label}</span>
                       </div>
-                      {theme === option.value && <Check className="h-4 w-4" />}
+                      {theme === option.value && <IconCheck className="h-4 w-4" />}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuSubContent>
@@ -120,7 +129,7 @@ const UserNav = () => {
             className="text-destructive focus:text-destructive cursor-pointer focus:bg-destructive/10"
             onClick={() => wallet && disconnect(wallet)}
           >
-            <LogOut className="mr-2 h-4 w-4" />
+            <IconLogout className="mr-2 h-4 w-4" />
             <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

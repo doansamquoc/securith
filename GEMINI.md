@@ -1,60 +1,33 @@
-# Securith - Blockchain Polling Application
+# GEMINI.md
 
 ## Project Overview
-Securith is a secure and transparent polling application integrated with the Blockchain. It leverages modern web technologies and decentralized protocols to ensure tamper-proof voting and gasless transactions for users.
 
-### Key Technologies
-- **Framework:** React 19 + Vite 8 + TypeScript
-- **Web3 SDK:** [Thirdweb SDK](https://thirdweb.com/) (targeting **Base Sepolia**)
-- **Account Abstraction:** EIP-4337 Smart Accounts with Sponsored Gas (Biconomy/Thirdweb)
-- **Routing:** [TanStack Router](https://tanstack.com/router) (File-based routing)
-- **State Management:** 
-  - **Server State:** [TanStack Query](https://tanstack.com/query)
-  - **Global Client State:** [Zustand](https://docs.pmnd.rs/zustand)
-- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/) + [Shadcn UI](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/)
-- **Forms:** [TanStack Form](https://tanstack.com/form) + [Zod](https://zod.dev/)
-- **Authentication:** In-app wallets (Social login via Google, Facebook, etc.) powered by Thirdweb/Magic.
+Securith is a blockchain-integrated, secure, and transparent polling application. It enables users to create, deploy, and participate in polls with verifiable results on the blockchain.
 
-## Directory Structure
-- `src/features/`: Feature-based architecture (e.g., `auth`, `home`). Each feature contains its own components and logic.
-- `src/routes/`: File-based route definitions for TanStack Router.
-  - `__root.tsx`: Main layout wrapper.
-  - `_authenticated.tsx`: Layout for protected routes.
-  - `_auth.tsx`: Layout for authentication-related routes (login).
-- `src/components/ui/`: Reusable UI components (Shadcn UI).
-- `src/hooks/`: Global custom React hooks.
-- `src/lib/`: Third-party library configurations (e.g., `thirdweb.ts`).
-- `src/store/`: Zustand store definitions.
-- `src/providers/`: Global context providers.
+### Main Technologies
 
-## Getting Started
+*   **Frontend:** React 19 (TypeScript), Vite
+*   **Routing:** TanStack Router
+*   **State Management:** Zustand, TanStack React Query
+*   **Forms/Validation:** TanStack React Form, Zod
+*   **Blockchain Integration:** Thirdweb SDK
+*   **Styling:** Tailwind CSS (v4), shadcn/ui
+*   **UI Components:** Radix UI, Lucide React, Recharts (for analytics)
 
-### Prerequisites
-- Node.js (v24.14.1 recommended)
-- Thirdweb Client ID/Secret Key
-- Alchemy API Key (for contract interactions)
+## Building and Running
 
-### Installation
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Configure environment variables:
-   ```bash
-   cp .env.example .env
-   ```
-   Add your `VITE_THIRDWEB_CLIENT_ID` and `VITE_THIRDWEB_SECRET_KEY`.
+*   **Install Dependencies:** `npm install`
+*   **Development Server:** `npm run dev`
+*   **Build:** `npm run build`
+*   **Lint:** `npm run lint`
+*   **Preview:** `npm run preview`
 
-### Development Commands
-- **Start Dev Server:** `npm run dev`
-- **Build Project:** `npm run build`
-- **Lint Code:** `npm run lint`
-- **Preview Build:** `npm run preview`
+*Note: The project requires environment variables configured in a `.env` file (based on `.env.example`).*
 
 ## Development Conventions
-- **Feature-First:** Place domain-specific logic and components inside `src/features/[feature-name]`.
-- **Type Safety:** Use TypeScript for all files. Define Zod schemas for form validation and API responses.
-- **Routing:** Use the `createFileRoute` from TanStack Router. New routes should be added to `src/routes/` and will be automatically generated into `routeTree.gen.ts`.
-- **Web3 Interaction:** Use Thirdweb hooks (`useActiveAccount`, `useConnect`, `useReadContract`, etc.) for blockchain interactions. Ensure gasless transactions are enabled via the `smartAccount` config in `src/lib/thirdweb.ts`.
-- **Styling:** Use Tailwind CSS 4 utility classes. Prefer Shadcn components for complex UI elements.
-- **State Management:** Use TanStack Query for any asynchronous data fetching. Use Zustand for simple global state like authentication status.
+
+*   **Codebase structure:** Features-based organization under `src/features/`.
+*   **Routing:** Uses file-based routing via `src/routes/` and TanStack Router.
+*   **UI Components:** Reusable components are located in `src/components/ui/` (following shadcn/ui conventions).
+*   **State:** Centralized auth state in `src/store/auth.store.ts`.
+*   **Lib:** Utility functions and library configurations (e.g., Thirdweb) reside in `src/lib/`.

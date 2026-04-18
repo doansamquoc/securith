@@ -7,7 +7,8 @@ import { useActiveAccount, useAutoConnect } from "thirdweb/react";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: ({ context }) => {
-    if (!context.isAuthenticated) {
+    // Only redirect if we are NOT loading and NOT authenticated
+    if (!context.isAutoConnecting && !context.isAuthenticated) {
       throw redirect({
         to: "/login",
       });

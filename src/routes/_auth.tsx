@@ -5,7 +5,8 @@ import { useActiveAccount, useAutoConnect } from "thirdweb/react";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: ({ context }) => {
-    if (context.isAuthenticated) {
+    // Only redirect if we have finished auto-connecting AND are authenticated
+    if (!context.isAutoConnecting && context.isAuthenticated) {
       throw redirect({
         to: "/dashboard",
       });
