@@ -5,6 +5,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { ThirdwebProvider } from "thirdweb/react";
 import { ThemeProvider } from "./components/theme-provider";
+import { AppProvider } from "./providers/app-provider";
 
 const router = createRouter({ routeTree });
 
@@ -17,9 +18,11 @@ declare module "@tanstack/react-router" {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-      <ThirdwebProvider>
-        <RouterProvider router={router} />
-      </ThirdwebProvider>
+      <AppProvider>
+        <ThirdwebProvider>
+          <RouterProvider router={router} />
+        </ThirdwebProvider>
+      </AppProvider>
     </ThemeProvider>
   </StrictMode>,
 );

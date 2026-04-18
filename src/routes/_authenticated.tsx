@@ -1,4 +1,6 @@
 import { Spinner } from "@/components/ui/spinner";
+import Footer from "@/features/home/components/footer";
+import Header from "@/features/home/components/header";
 import { client } from "@/lib/thirdweb";
 import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
 import { useActiveAccount, useAutoConnect } from "thirdweb/react";
@@ -17,5 +19,13 @@ function AuthenticatedLayout() {
   if (!account) {
     return <Navigate to="/login" />;
   }
-  return <Outlet />;
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="max-w-4xl mx-auto flex-1">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
 }
