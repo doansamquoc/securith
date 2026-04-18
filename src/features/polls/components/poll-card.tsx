@@ -1,6 +1,4 @@
 import { PollStatusBadge } from "./poll-status-badge";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import type { Poll } from "../types";
 
@@ -10,29 +8,28 @@ interface PollCardProps {
 
 export function PollCard({ poll }: PollCardProps) {
   return (
-    <Card className="flex flex-col h-full shadow-none border-border/30 rounded-lg hover:border-border transition-colors">
-      <CardHeader className="space-y-2 pb-2">
-        <div className="flex items-center justify-between">
-          <PollStatusBadge status={poll.status} />
-          {poll.settings.multiChoice && (
-            <span className="text-[10px] uppercase tracking-wider font-light text-muted-foreground">
-              Multi-choice
-            </span>
-          )}
-        </div>
-        <CardTitle className="line-clamp-2 text-lg font-light leading-snug">{poll.title}</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pb-4">
-        <p className="text-xs text-muted-foreground line-clamp-2 font-light leading-relaxed">{poll.description}</p>
-      </CardContent>
-      <CardFooter className="flex items-center justify-between pt-2 text-xs text-muted-foreground font-light border-t border-border/30">
-        <span>{poll.totalVotes.toString()} votes</span>
-        <Button variant="ghost" size="sm" asChild className="h-6 font-light px-2 text-xs">
-          <Link to="/polls/$pollId" params={{ pollId: poll.id }}>
-            Xem chi tiết
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
+    <Link 
+      to="/polls/$pollId" 
+      params={{ pollId: poll.id }}
+      className="group flex flex-col h-full rounded-xl border bg-background p-6 hover:bg-muted/30 transition-all duration-300"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <PollStatusBadge status={poll.status} />
+        {poll.settings.multiChoice && (
+          <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground/60">
+            Multi-choice
+          </span>
+        )}
+      </div>
+      <h3 className="text-lg font-semibold leading-snug mb-2 group-hover:text-primary transition-colors">
+        {poll.title}
+      </h3>
+      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-6">
+        {poll.description}
+      </p>
+      <div className="mt-auto pt-4 text-xs font-medium text-muted-foreground">
+        {poll.totalVotes.toString()} votes
+      </div>
+    </Link>
   );
 }
