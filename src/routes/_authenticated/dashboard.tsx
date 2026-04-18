@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { useActiveAccount, useActiveWallet } from "thirdweb/react";
 
-export const Route = createFileRoute("/_authenticated/")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   component: RouteComponent,
 });
+
 
 function RouteComponent() {
   const account = useActiveAccount();

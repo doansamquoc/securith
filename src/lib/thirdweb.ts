@@ -1,4 +1,5 @@
 import { createThirdwebClient } from "thirdweb";
+import { baseSepolia } from "thirdweb/chains";
 import { inAppWallet } from "thirdweb/wallets";
 const THIRDWEB_CLIENT_ID = import.meta.env.VITE_THIRDWEB_CLIENT_ID;
 const THIRDWEB_SECRET_KEY = import.meta.env.VITE_THIRDWEB_SECRET_KEY;
@@ -16,5 +17,16 @@ export const wallets = [
     auth: {
       options: ["google", "telegram", "email", "phone", "apple", "facebook", "tiktok", "github"],
     },
+    executionMode: {
+      mode: "EIP4337",
+      smartAccount: { chain: baseSepolia, sponsorGas: true },
+    },
   }),
 ];
+
+export const wallet = inAppWallet({
+  executionMode: {
+    mode: "EIP4337",
+    smartAccount: { chain: baseSepolia, sponsorGas: true },
+  },
+});

@@ -2,10 +2,17 @@ import { Spinner } from "@/components/ui/spinner";
 import Footer from "@/features/home/components/footer";
 import Header from "@/features/home/components/header";
 import { client } from "@/lib/thirdweb";
-import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
+import { createFileRoute, redirect, Outlet, Navigate } from "@tanstack/react-router";
 import { useActiveAccount, useAutoConnect } from "thirdweb/react";
 
 export const Route = createFileRoute("/_authenticated")({
+  beforeLoad: ({ context }) => {
+    if (!context.isAuthenticated) {
+      throw redirect({
+        to: "/login",
+      });
+    }
+  },
   component: AuthenticatedLayout,
 });
 
@@ -16,9 +23,12 @@ function AuthenticatedLayout() {
   if (isAutoConnecting) {
     return <Spinner />;
   }
+
+  // Fallback redirection if beforeLoad didn't catch it
   if (!account) {
     return <Navigate to="/login" />;
   }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />

@@ -1,9 +1,16 @@
 import { Spinner } from "@/components/ui/spinner";
 import { client } from "@/lib/thirdweb";
-import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
+import { createFileRoute, redirect, Outlet, Navigate } from "@tanstack/react-router";
 import { useActiveAccount, useAutoConnect } from "thirdweb/react";
 
 export const Route = createFileRoute("/_auth")({
+  beforeLoad: ({ context }) => {
+    if (context.isAuthenticated) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
   component: RouteComponent,
 });
 
@@ -19,12 +26,13 @@ function RouteComponent() {
     );
   }
 
+  // Fallback redirection if beforeLoad didn't catch it
   if (account) {
     return <Navigate to="/" />;
   }
 
   return (
-    <div className="max-w-md mx-auto flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <Outlet />
     </div>
   );
