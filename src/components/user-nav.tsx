@@ -45,7 +45,7 @@ const UserNav = () => {
   ];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -64,62 +64,67 @@ const UserNav = () => {
           <ChevronDown className="h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none text-muted-foreground uppercase tracking-wider text-[10px]">
-              Active Wallet
-            </p>
-            <p className="text-xs font-mono font-medium truncate">{address}</p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuPortal>
+        <DropdownMenuContent className="w-56" align="start">
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none text-muted-foreground uppercase tracking-wider text-[10px]">
+                Active Wallet
+              </p>
+              <p className="text-xs font-mono font-medium truncate">{address}</p>
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
 
-        <DropdownMenuGroup>
-          {menuItems.map((item) => (
-            <DropdownMenuItem key={item.label}>
-              <item.icon className="mr-2 h-4 w-4" />
-              <span>{item.label}</span>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuGroup>
+          <DropdownMenuGroup>
+            {menuItems.map((item) => (
+              <DropdownMenuItem key={item.label}>
+                <item.icon className="mr-2 h-4 w-4" />
+                <span>{item.label}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuGroup>
 
-        <DropdownMenuSeparator />
+          <DropdownMenuSeparator />
 
-        <DropdownMenuGroup>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <Sun className="mr-2 h-4 w-4 dark:hidden" />
-              <Moon className="mr-2 h-4 w-4 hidden dark:block" />
-              <span>Theme</span>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                {themeOptions.map((option) => (
-                  <DropdownMenuItem
-                    key={option.value}
-                    onClick={() => setTheme(option.value as any)}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center">
-                      <option.icon className="mr-2 h-4 w-4" />
-                      <span>{option.label}</span>
-                    </div>
-                    {theme === option.value && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-        </DropdownMenuGroup>
+          <DropdownMenuGroup>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <Sun className="mr-2 h-4 w-4 dark:hidden" />
+                <Moon className="mr-2 h-4 w-4 hidden dark:block" />
+                <span>Theme</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  {themeOptions.map((option) => (
+                    <DropdownMenuItem
+                      key={option.value}
+                      onClick={() => setTheme(option.value as any)}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center">
+                        <option.icon className="mr-2 h-4 w-4" />
+                        <span>{option.label}</span>
+                      </div>
+                      {theme === option.value && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+          </DropdownMenuGroup>
 
-        <DropdownMenuSeparator />
+          <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="cursor-pointer" onClick={() => wallet && disconnect(wallet)} variant="destructive">
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+          <DropdownMenuItem
+            className="text-destructive focus:text-destructive cursor-pointer focus:bg-destructive/10"
+            onClick={() => wallet && disconnect(wallet)}
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
     </DropdownMenu>
   );
 };

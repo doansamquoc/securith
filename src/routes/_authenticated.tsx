@@ -32,7 +32,7 @@ function AuthenticatedLayout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="max-w-4xl mx-auto flex-1">
+      <main className="container mx-auto px-4 flex-1">
         <Outlet />
       </main>
       <Footer />

@@ -1,7 +1,10 @@
-import { ShieldCheck, Github, Twitter, Linkedin, Mail } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Linkedin from "@thesvg/react/linkedin";
+import Github from "@thesvg/react/github";
+import Twitter from "@thesvg/react/twitter";
+import { Mail, ShieldCheck } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -47,7 +50,8 @@ const Footer = () => {
               <span className="text-xl font-bold tracking-tight">Securith</span>
             </div>
             <p className="text-muted-foreground max-w-sm leading-relaxed">
-              Empowering global decision-making through secure, transparent, and decentralized blockchain voting technology.
+              Empowering global decision-making through secure, transparent, and decentralized blockchain voting
+              technology.
             </p>
             <div className="flex items-center gap-4">
               <Button variant="ghost" size="icon" className="rounded-full hover:text-primary">
@@ -84,23 +88,29 @@ const Footer = () => {
 
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
-             <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-muted-foreground text-center">
               © {currentYear} Securith Labs Inc. All rights reserved.
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <Link to="/" className="hover:text-foreground">Cookies</Link>
-              <Link to="/" className="hover:text-foreground">Security</Link>
+              <Link to="/" className="hover:text-foreground">
+                Cookies
+              </Link>
+              <Link to="/" className="hover:text-foreground">
+                Security
+              </Link>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2 bg-background border border-border p-1 rounded-lg w-full max-w-sm">
             <Mail className="h-4 w-4 ml-2 text-muted-foreground" />
-            <Input 
-              type="email" 
-              placeholder="Subscribe to newsletter" 
+            <Input
+              type="email"
+              placeholder="Subscribe to newsletter"
               className="border-none focus-visible:ring-0 shadow-none h-8 text-sm bg-transparent"
             />
-            <Button size="sm" className="h-8 rounded-md px-3">Join</Button>
+            <Button size="sm" className="h-8 rounded-md px-3">
+              Join
+            </Button>
           </div>
         </div>
       </div>
