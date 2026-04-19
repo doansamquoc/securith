@@ -17,11 +17,12 @@ export function PollStatusBadge({ status, className }: PollStatusBadgeProps) {
     [PollStatus.Active]: {
       label: "Đang diễn ra",
       variant: "default" as const,
-      className: "bg-emerald-100 text-emerald-700 hover:bg-emerald-100/80 dark:bg-emerald-900/30 dark:text-emerald-400 border-none",
+      className:
+        "bg-emerald-100 text-emerald-700 hover:bg-emerald-100/80 dark:bg-emerald-900/30 dark:text-emerald-400 border-none",
     },
     [PollStatus.Ended]: {
       label: "Đã kết thúc",
-      variant: "outline" as const,
+      variant: "secondary" as const,
       className: "bg-slate-100 text-slate-700 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-400",
     },
     [PollStatus.Cancelled]: {
@@ -34,7 +35,10 @@ export function PollStatusBadge({ status, className }: PollStatusBadgeProps) {
   const config = statusConfig[status];
 
   return (
-    <Badge variant={config.variant} className={cn("px-2.5 py-0.5 font-medium shadow-none", config.className, className)}>
+    <Badge
+      variant={config.variant}
+      className={cn("px-2.5 py-0.5 font-medium shadow-none", config.className, className)}
+    >
       {config.label}
     </Badge>
   );

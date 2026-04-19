@@ -36,7 +36,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           <div className="sm:col-span-2 lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2 w-fit">
-              <Logo className="h-6 w-6" />
+              <Logo />
               <span className="font-bold">Securith</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
@@ -64,9 +64,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t pt-8 md:flex-row md:gap-0">
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} Securith Labs. All rights reserved.
-          </p>
+          <p className="text-sm text-muted-foreground">© {currentYear} Securith Labs. All rights reserved.</p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground font-medium">
             <span>Powered by Base</span>
           </div>

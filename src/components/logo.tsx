@@ -1,10 +1,10 @@
+import { IconGhost3 } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
-import { Aionlabs } from "@thesvg/react";
 
 const Logo = () => {
   return (
     <Link to="/">
-      <Aionlabs className="w-8" />
+      <IconGhost3 size={32} />
     </Link>
   );
 };

@@ -58,6 +58,6 @@ export interface PollAnalytics {
 
 export interface UserStats {
   address: string;
-  pollsCreated: bigint;
-  totalVotesReceived: bigint;
+  pollsCreated: number;
+  totalVotesReceived: number;
 }

@@ -13,6 +13,22 @@ const MOCK_VOTER = "0x0987654321098765432109876543210987654321";
 
 export const MOCK_POLLS: Poll[] = [
   {
+    id: "999999",
+    title: "Đã vote nhưng chưa kết thúc",
+    description: "Vote for your primary programming language for web development.",
+    creator: MOCK_CREATOR,
+    startsAt: BigInt(Math.floor(Date.now() / 1000) - 86400), // Started yesterday
+    endsAt: BigInt(Math.floor(Date.now() / 1000) + 86400 * 7), // Ends in 7 days
+    options: ["TypeScript", "JavaScript", "Python", "Rust", "Go"],
+    status: PollStatus.Active,
+    totalVotes: BigInt(150),
+    uniqueVoters: BigInt(150),
+    settings: {
+      multiChoice: true,
+      noDeadline: false,
+    },
+  },
+  {
     id: "1",
     title: "Favorite Programming Language",
     description: "Vote for your primary programming language for web development.",
@@ -24,7 +40,7 @@ export const MOCK_POLLS: Poll[] = [
     totalVotes: BigInt(150),
     uniqueVoters: BigInt(150),
     settings: {
-      multiChoice: false,
+      multiChoice: true,
       noDeadline: false,
     },
   },
@@ -33,8 +49,8 @@ export const MOCK_POLLS: Poll[] = [
     title: "Best Frontend Framework 2026",
     description: "Which framework are you most excited about this year?",
     creator: MOCK_CREATOR,
-    startsAt: BigInt(Math.floor(Date.now() / 1000) - 172800), // Started 2 days ago
-    endsAt: BigInt(Math.floor(Date.now() / 1000) - 3600), // Ended 1 hour ago
+    startsAt: BigInt(Math.floor(Date.now() / 1000) - 86400), // Started yesterday
+    endsAt: BigInt(Math.floor(Date.now() / 1000) + 86400 * 7), // Ends in 7 days
     options: ["React 19", "Next.js", "Vue 4", "Svelte 5", "Angular 20"],
     status: PollStatus.Ended,
     totalVotes: BigInt(450),
@@ -52,7 +68,7 @@ export const MOCK_POLLS: Poll[] = [
     startsAt: BigInt(Math.floor(Date.now() / 1000) + 3600), // Starts in 1 hour
     endsAt: BigInt(Math.floor(Date.now() / 1000) + 86400 * 14), // Ends in 14 days
     options: ["New York", "London", "Tokyo", "Berlin", "Singapore"],
-    status: PollStatus.NotStarted,
+    status: PollStatus.Active,
     totalVotes: BigInt(0),
     uniqueVoters: BigInt(0),
     settings: {
@@ -69,6 +85,22 @@ export const MOCK_POLLS: Poll[] = [
     endsAt: BigInt(Math.floor(Date.now() / 1000) + 86400 * 30), // Ends in 30 days
     options: ["Yes", "No", "Abstain"],
     status: PollStatus.Active,
+    totalVotes: BigInt(1250),
+    uniqueVoters: BigInt(1250),
+    settings: {
+      multiChoice: false,
+      noDeadline: true,
+    },
+  },
+  {
+    id: "5",
+    title: "Đâu là người đẹp trai nhất hành tinh?",
+    description: "Bầu ra gương mặt đẹp trai nhất hành tinh.",
+    creator: MOCK_CREATOR,
+    startsAt: BigInt(Math.floor(Date.now() / 1000) - 604800), // Started 1 week ago
+    endsAt: BigInt(Math.floor(Date.now() / 1000) + 86400 * 30), // Ends in 30 days
+    options: ["Tôi", "Người Tạo Cuộc Bầu Cử Này", "Cả 2 Đáp Án Trên"],
+    status: PollStatus.Cancelled,
     totalVotes: BigInt(1250),
     uniqueVoters: BigInt(1250),
     settings: {
@@ -149,6 +181,6 @@ export const MOCK_POLL_ANALYTICS: Record<string, PollAnalytics> = {
 
 export const MOCK_USER_STATS: UserStats = {
   address: MOCK_CREATOR,
-  pollsCreated: BigInt(4),
-  totalVotesReceived: BigInt(1850),
+  pollsCreated: 123,
+  totalVotesReceived: 12312312,
 };

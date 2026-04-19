@@ -14,11 +14,9 @@ import {
   DropdownMenuSubContent,
 } from "./ui/dropdown-menu";
 import { useUser } from "@/hooks/use-user";
-import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useTheme } from "./theme-provider";
 import {
-  IconBell,
   IconCheck,
   IconChevronDown,
   IconDeviceDesktop,
@@ -28,6 +26,7 @@ import {
   IconSun,
   IconUserCircle,
 } from "@tabler/icons-react";
+import { ShimmerSkeleton } from "./unlumen-ui/shimmer-skeleton";
 
 const UserNav = () => {
   const account = useActiveAccount();
@@ -36,15 +35,14 @@ const UserNav = () => {
   const { isLoading } = useUser(account?.address);
   const { theme, setTheme } = useTheme();
 
-  if (isLoading) return <Skeleton className="h-10 w-32 rounded-full" />;
+  if (isLoading) return <ShimmerSkeleton className="h-10 w-32 rounded-full" />;
 
   const address = account?.address || "";
   const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
 
   const menuItems = [
-    { label: "Profile", icon: IconUserCircle },
-    { label: "Settings", icon: IconSettings },
-    { label: "Notifications", icon: IconBell },
+    { label: "Hồ Sơ", icon: IconUserCircle },
+    { label: "Cài Đặt", icon: IconSettings },
   ];
 
   const themeOptions = [
@@ -61,10 +59,10 @@ const UserNav = () => {
           className="relative h-10 w-auto flex items-center gap-2 px-2 hover:bg-accent rounded-full transition-all border border-transparent hover:border-border"
         >
           <Avatar className="h-8 w-8 border border-border">
-            <AvatarImage src={`https://api.dicebear.com/7.x/identicon/svg?seed=${address}`} alt={address} />
+            <AvatarImage src={`https://api.dicebear.com/9.x/glass/svg?seed=${address}`} alt={address} />
             <AvatarFallback>{address.slice(2, 4).toUpperCase()}</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col items-start text-left pr-1 hidden sm:flex">
+          <div className="hidden sm:flex flex-col items-start text-left pr-1">
             <span className="text-xs font-bold leading-none">{shortAddress}</span>
             <span className="text-[10px] text-muted-foreground leading-none mt-1">
               {wallet?.id === "inApp" ? "Smart Account" : "External Wallet"}
@@ -74,7 +72,7 @@ const UserNav = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
-        <DropdownMenuContent className="w-56" align="start">
+        <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none text-muted-foreground uppercase tracking-wider text-[10px]">

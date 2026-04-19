@@ -1,10 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, ShieldCheck, Share } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { MOCK_POLLS, MOCK_POLL_ANALYTICS, MOCK_VOTER_DETAILS, PollStatus } from "@/features/polls";
 import { PollDetailHeader } from "@/features/polls/components/poll-detail-header";
 import { PollVoteForm } from "@/features/polls/components/poll-vote-form";
 import { PollResults } from "@/features/polls/components/poll-results";
+import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import {
+  IconArrowLeft,
+  IconCheck,
+  IconDotsVertical,
+  IconExternalLink,
+  IconShare2,
+  IconUnlink,
+} from "@tabler/icons-react";
+import SuccessAlert from "@/components/success-alert";
 
 export const Route = createFileRoute("/_authenticated/polls/$pollId")({
   component: PollDetailComponent,
@@ -20,12 +30,21 @@ function PollDetailComponent() {
 
   if (!poll) {
     return (
-      <div className="py-24 text-center space-y-4">
-        <h2 className="text-2xl font-semibold">Không tìm thấy cuộc bầu chọn</h2>
-        <Button variant="link" asChild>
-          <Link to="/dashboard">Quay lại Dashboard</Link>
-        </Button>
-      </div>
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia>
+            <IconUnlink size={48} />
+          </EmptyMedia>
+          <EmptyTitle>Cuộc bầu chọn này không tồn tại</EmptyTitle>
+        </EmptyHeader>
+        <EmptyContent className="flex-row justify-center gap-2">
+          <Button size="sm" variant={"link"} asChild>
+            <Link to="/dashboard">
+              Quay lại Bảng Điều Khiển <IconExternalLink />
+            </Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
     );
   }
 
@@ -41,45 +60,52 @@ function PollDetailComponent() {
   return (
     <div className="py-12 max-w-4xl mx-auto space-y-12 container px-4">
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-foreground">
+        <Button variant="outline" size="default" asChild>
           <Link to="/dashboard">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Trở về
+            <IconArrowLeft /> Trở về
           </Link>
         </Button>
-        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-          <Share className="mr-2 h-4 w-4" /> Chia sẻ
+        <Button variant="outline" size="default" className="ml-auto ">
+          <IconShare2 /> Chia sẻ
+        </Button>
+        <Button variant="outline" size="default" className="ml-2 ">
+          <IconDotsVertical />
         </Button>
       </div>
 
       <PollDetailHeader poll={poll} />
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div className="flex flex-col">
         <div className="md:col-span-8 space-y-8">
-          <div>
-            <h3 className="text-xl font-medium mb-6">{canVote ? "Lựa chọn của bạn" : "Kết quả"}</h3>
-            
-            {canVote ? (
-              <div className="space-y-6">
-                <PollVoteForm poll={poll} onVote={handleVote} />
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {hasVoted && (
-                  <div className="p-4 bg-muted/30 rounded-xl flex items-center gap-3 text-sm">
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    <span>Bạn đã tham gia bầu chọn này. Phiếu bầu đã được ghi nhận trên chuỗi.</span>
-                  </div>
-                )}
-                {analytics ? (
-                  <PollResults analytics={analytics} />
-                ) : (
-                  <p className="text-muted-foreground py-8 text-sm">
-                    Chưa có dữ liệu phân tích.
-                  </p>
-                )}
-              </div>
+          <div className="">
+            <h3 className="text-lg font-medium uppercase">{canVote ? "Lựa chọn của bạn" : "Kết quả"}</h3>
+            {canVote ?? (
+              <span className="text-muted-foreground text-xs">
+                {poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}
+              </span>
             )}
           </div>
+
+          {canVote ? (
+            <div className="space-y-6">
+              <PollVoteForm poll={poll} onVote={handleVote} />
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {hasVoted && (
+                <SuccessAlert
+                  icon={<IconCheck />}
+                  title="Đã Bầu Chọn"
+                  description="Bạn đã tham gia cuộc bầu chọn này. Phiếu bầu đã được ghi nhận trên chuỗi."
+                />
+              )}
+              {analytics ? (
+                <PollResults analytics={analytics} />
+              ) : (
+                <p className="text-muted-foreground py-8 text-sm">Chưa có dữ liệu phân tích.</p>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="md:col-span-4 space-y-8">
@@ -88,7 +114,9 @@ function PollDetailComponent() {
             <div className="p-4 rounded-xl border border-border/50 space-y-4 bg-muted/10">
               <div className="space-y-1">
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Mạng lưới</span>
-                <span className="text-sm font-medium flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia</span>
+                <span className="text-sm font-medium flex items-center gap-1.5">
+                  <ShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia
+                </span>
               </div>
               <div className="space-y-1 pt-2 border-t border-border/50">
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Smart Contract</span>
