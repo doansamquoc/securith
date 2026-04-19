@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { PollStatus } from "../types";
 import { cn } from "@/lib/utils";
 
@@ -10,33 +11,31 @@ export function PollStatusBadge({ status, className }: PollStatusBadgeProps) {
   const statusConfig = {
     [PollStatus.NotStarted]: {
       label: "Sắp diễn ra",
-      className: "border-blue-200 text-blue-700 dark:border-blue-800 dark:text-blue-400 bg-transparent",
+      variant: "secondary" as const,
+      className: "bg-amber-100 text-amber-700 hover:bg-amber-100/80 dark:bg-amber-900/30 dark:text-amber-400",
     },
     [PollStatus.Active]: {
       label: "Đang diễn ra",
-      className: "border-green-200 text-green-700 dark:border-green-800 dark:text-green-400 bg-transparent",
+      variant: "default" as const,
+      className: "bg-emerald-100 text-emerald-700 hover:bg-emerald-100/80 dark:bg-emerald-900/30 dark:text-emerald-400 border-none",
     },
     [PollStatus.Ended]: {
       label: "Đã kết thúc",
-      className: "border-border text-muted-foreground bg-transparent",
+      variant: "outline" as const,
+      className: "bg-slate-100 text-slate-700 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-400",
     },
     [PollStatus.Cancelled]: {
       label: "Đã hủy",
-      className: "border-red-200 text-red-700 dark:border-red-800 dark:text-red-400 bg-transparent",
+      variant: "destructive" as const,
+      className: "",
     },
   };
 
   const config = statusConfig[status];
 
   return (
-    <span
-      className={cn(
-        "inline-flex items-center px-2 py-0.5 rounded-full border text-[10px] uppercase tracking-wider font-medium",
-        config.className,
-        className
-      )}
-    >
+    <Badge variant={config.variant} className={cn("px-2.5 py-0.5 font-medium shadow-none", config.className, className)}>
       {config.label}
-    </span>
+    </Badge>
   );
 }
