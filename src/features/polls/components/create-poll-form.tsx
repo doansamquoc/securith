@@ -4,11 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Plus, Trash2, Loader2, ArrowLeft, Calendar as CalendarIcon, Settings2, ListTodo } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Plus, Trash2, Loader2, ArrowLeft, Calendar as CalendarIcon, Settings2 } from "lucide-react";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { createPollSchema, type CreatePollInput } from "../schemas/create-poll.schema";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 const getDefaultValues = (): CreatePollInput => ({
@@ -111,7 +110,7 @@ export function CreatePollForm() {
                   <Textarea
                     id={field.name}
                     placeholder="Mô tả chi tiết mục đích của cuộc bầu chọn này..."
-                    className="min-h-[100px]"
+                    className="min-h-25"
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -290,7 +289,7 @@ export function CreatePollForm() {
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             children={([canSubmit, isSubmitting]) => (
-              <Button type="submit" disabled={!canSubmit || isSubmitting} className="min-w-[140px]">
+              <Button type="submit" disabled={!canSubmit || isSubmitting} className="min-w-35">
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Đang tạo...

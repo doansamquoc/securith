@@ -6,7 +6,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { IconClearAll, IconFolderExclamation, IconPlus, IconSearch } from "@tabler/icons-react";
 import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import PollCardSkeleton from "./poll-card-skeleton";
 
 interface PollListProps {
   polls: Poll[];

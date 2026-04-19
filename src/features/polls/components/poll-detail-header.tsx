@@ -1,9 +1,7 @@
 import type { Poll } from "../types";
-import { PollStatusBadge } from "./poll-status-badge";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import { Badge } from "@/components/ui/badge";
-import { User, Calendar, ShieldCheck } from "lucide-react";
+import { User, Calendar } from "lucide-react";
 
 interface PollDetailHeaderProps {
   poll: Poll;
