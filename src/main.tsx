@@ -8,6 +8,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import { client } from "./lib/thirdweb";
 import { useActiveAccount, useAutoConnect } from "thirdweb/react";
 import { AppProvider } from "./providers/app-provider";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 const router = createRouter({
   routeTree,
@@ -48,7 +49,9 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <AppProvider>
         <ThirdwebProvider>
-          <InnerApp />
+          <TooltipProvider>
+            <InnerApp />
+          </TooltipProvider>
         </ThirdwebProvider>
       </AppProvider>
     </ThemeProvider>
