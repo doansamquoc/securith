@@ -22,7 +22,11 @@ function AuthenticatedLayout() {
   const { isLoading: isAutoConnecting } = useAutoConnect({ client });
 
   if (isAutoConnecting) {
-    return <Spinner />;
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Spinner className="size-10" />
+      </div>
+    );
   }
 
   // Fallback redirection if beforeLoad didn't catch it

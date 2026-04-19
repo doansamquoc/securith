@@ -20,6 +20,7 @@ function RouteComponent() {
   const { isLoading: isAutoConnecting } = useAutoConnect({ client });
 
   if (isAutoConnecting) {
+    console.log("Auth?");
     return (
       <div className="flex h-screen items-center justify-center">
         <Spinner />
