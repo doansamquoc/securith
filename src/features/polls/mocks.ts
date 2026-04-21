@@ -26,6 +26,7 @@ export const MOCK_POLLS: Poll[] = [
     settings: {
       multiChoice: true,
       noDeadline: false,
+      resultVisibility: 0,
     },
   },
   {
@@ -42,6 +43,7 @@ export const MOCK_POLLS: Poll[] = [
     settings: {
       multiChoice: true,
       noDeadline: false,
+      resultVisibility: 0, // Results visible to everyone
     },
   },
   {
@@ -58,6 +60,7 @@ export const MOCK_POLLS: Poll[] = [
     settings: {
       multiChoice: false,
       noDeadline: false,
+      resultVisibility: 1, // Results visible only to voters
     },
   },
   {
@@ -74,6 +77,7 @@ export const MOCK_POLLS: Poll[] = [
     settings: {
       multiChoice: true,
       noDeadline: false,
+      resultVisibility: 2, // Results not visible until poll ends
     },
   },
   {
@@ -90,6 +94,7 @@ export const MOCK_POLLS: Poll[] = [
     settings: {
       multiChoice: false,
       noDeadline: true,
+      resultVisibility: 0, // Results visible to everyone
     },
   },
   {
@@ -106,6 +111,7 @@ export const MOCK_POLLS: Poll[] = [
     settings: {
       multiChoice: false,
       noDeadline: true,
+      resultVisibility: 0, // Results visible to everyone
     },
   },
 ];
