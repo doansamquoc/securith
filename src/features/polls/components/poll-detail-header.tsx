@@ -6,7 +6,7 @@ interface PollDetailHeaderProps {
 }
 
 export function PollDetailHeader({ poll }: PollDetailHeaderProps) {
-  const endDate = new Date(Number(poll.endsAt) * 1000);
+  // const endDate = new Date(Number(poll.endsAt) * 1000);
 
   return (
     <div>
