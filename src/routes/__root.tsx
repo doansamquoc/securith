@@ -15,7 +15,7 @@ function RootComponent() {
   return (
     <React.Fragment>
       <Outlet />
-      <Toaster />
+      <Toaster position="top-center" theme="system" />
     </React.Fragment>
   );
 }
