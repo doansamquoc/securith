@@ -7,9 +7,18 @@ export const PollStatus = {
 
 export type PollStatus = (typeof PollStatus)[keyof typeof PollStatus];
 
+export const PollResultVisibility = {
+  Always: 0,
+  AfterVote: 1,
+  AfterEnd: 2,
+  Never: 3,
+} as const;
+
+export type PollResultVisibility = (typeof PollResultVisibility)[keyof typeof PollResultVisibility];
 export interface PollSettings {
   multiChoice: boolean;
   noDeadline: boolean;
+  resultVisibility: PollResultVisibility;
 }
 
 export interface Poll {

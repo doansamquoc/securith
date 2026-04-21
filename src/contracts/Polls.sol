@@ -2,11 +2,24 @@
 pragma solidity ^0.8.20;
 
 contract Polls {
-    enum PollStatus { Upcoming, Open, Ended, Cancelled }
+    enum PollStatus {
+        Upcoming,
+        Open,
+        Ended,
+        Cancelled
+    }
+
+    enum PollResultVisibility {
+        Always,
+        AfterVote,
+        AfterEnd,
+        Never
+    }
 
     struct PollSettings {
         bool multiChoice; // Allows voting for multiple different options
-        bool noDeadline;  // Poll starts immediately and never ends
+        bool noDeadline; // Poll starts immediately and never ends
+        PollResultVisibility resultVisibility;
     }
 
     struct Poll {
@@ -17,8 +30,8 @@ contract Polls {
         uint256 endsAt;
         string[] options;
         PollStatus internalStatus;
-        uint256 totalVotes;      // Total number of votes (selections)
-        uint256 uniqueVoters;   // Total number of participants
+        uint256 totalVotes; // Total number of votes (selections)
+        uint256 uniqueVoters; // Total number of participants
         PollSettings settings;
     }
 
@@ -28,12 +41,17 @@ contract Polls {
     // pollId => voterAddress => hasVotedAny
     mapping(uint256 => mapping(address => bool)) public hasVoted;
     // pollId => voterAddress => optionIndex => hasVotedSpecificOption
-    mapping(uint256 => mapping(address => mapping(uint256 => bool))) public hasVotedOption;
+    mapping(uint256 => mapping(address => mapping(uint256 => bool)))
+        public hasVotedOption;
     // creatorAddress => pollIds
     mapping(address => uint256[]) public userPolls;
 
     event PollCreated(uint256 indexed pollId, string title, address creator);
-    event VoteCast(uint256 indexed pollId, uint256 indexed optionIndex, address voter);
+    event VoteCast(
+        uint256 indexed pollId,
+        uint256 indexed optionIndex,
+        address voter
+    );
     event PollCancelled(uint256 indexed pollId);
 
     error PollNotActive();
@@ -45,6 +63,10 @@ contract Polls {
     error InvalidDates();
     error MinTwoOptionsRequired();
     error NoVotesCast();
+
+    error PollResultVisibleAfterVote();
+    error PollResultVisibleAfterEnd();
+    error PollResultNeverVisible();
 
     function createPoll(
         string memory _title,
@@ -90,7 +112,8 @@ contract Polls {
         if (_pollId >= polls.length) revert Unauthorized();
         Poll storage poll = polls[_pollId];
 
-        if (poll.internalStatus == PollStatus.Cancelled) return PollStatus.Cancelled;
+        if (poll.internalStatus == PollStatus.Cancelled)
+            return PollStatus.Cancelled;
         if (poll.settings.noDeadline) return PollStatus.Open;
 
         if (block.timestamp < poll.startsAt) return PollStatus.Upcoming;
@@ -105,12 +128,13 @@ contract Polls {
         if (currentStatus == PollStatus.Cancelled) revert PollNotActive();
         if (currentStatus == PollStatus.Upcoming) revert PollNotStarted();
         if (currentStatus == PollStatus.Ended) revert PollAlreadyEnded();
-        
+
         Poll storage poll = polls[_pollId];
         if (_optionIndex >= poll.options.length) revert InvalidOption();
 
         if (poll.settings.multiChoice) {
-            if (hasVotedOption[_pollId][msg.sender][_optionIndex]) revert AlreadyVoted();
+            if (hasVotedOption[_pollId][msg.sender][_optionIndex])
+                revert AlreadyVoted();
         } else {
             if (hasVoted[_pollId][msg.sender]) revert AlreadyVoted();
         }
@@ -122,7 +146,7 @@ contract Polls {
 
         hasVoted[_pollId][msg.sender] = true;
         hasVotedOption[_pollId][msg.sender][_optionIndex] = true;
-        
+
         pollOptionVotes[_pollId][_optionIndex]++;
         poll.totalVotes++;
 
@@ -134,28 +158,44 @@ contract Polls {
      * @return results Array of vote counts for each option
      * @return uniqueVoters Number of unique addresses that participated
      */
-    function getPollResults(uint256 _pollId) external view returns (uint256[] memory results, uint256 uniqueVoters) {
+    function getPollResults(
+        uint256 _pollId
+    ) external view returns (uint256[] memory results, uint256 uniqueVoters) {
         if (_pollId >= polls.length) revert Unauthorized();
         Poll storage poll = polls[_pollId];
-        
+
+        if (poll.settings.resultVisibility == PollResultVisibility.AfterVote) {
+            if (!hasVoted[_pollId][msg.sender])
+                revert PollResultVisibleAfterVote();
+        } else if (
+            poll.settings.resultVisibility == PollResultVisibility.AfterEnd
+        ) {
+            if (block.timestamp <= poll.endsAt)
+                revert PollResultVisibleAfterEnd();
+        } else if (poll.settings.resultVisibility == PollResultVisibility.Never)
+            revert PollResultNeverVisible();
+
         uint256 optionsLength = poll.options.length;
         results = new uint256[](optionsLength);
-        
+
         for (uint256 i = 0; i < optionsLength; i++) {
             results[i] = pollOptionVotes[_pollId][i];
         }
-        
+
         return (results, poll.uniqueVoters);
     }
 
-    function getVoterDetails(uint256 _pollId, address _voter) external view returns (bool voted, bool[] memory chosenOptions) {
+    function getVoterDetails(
+        uint256 _pollId,
+        address _voter
+    ) external view returns (bool voted, bool[] memory chosenOptions) {
         if (_pollId >= polls.length) revert Unauthorized();
         Poll storage poll = polls[_pollId];
-        
+
         voted = hasVoted[_pollId][_voter];
         uint256 optionsLength = poll.options.length;
         chosenOptions = new bool[](optionsLength);
-        
+
         if (voted) {
             for (uint256 i = 0; i < optionsLength; i++) {
                 chosenOptions[i] = hasVotedOption[_pollId][_voter][i];
@@ -163,7 +203,9 @@ contract Polls {
         }
     }
 
-    function getWinner(uint256 _pollId) external view returns (uint256 winnerIndex, uint256 winnerVotes) {
+    function getWinner(
+        uint256 _pollId
+    ) external view returns (uint256 winnerIndex, uint256 winnerVotes) {
         if (_pollId >= polls.length) revert Unauthorized();
         Poll storage poll = polls[_pollId];
         if (poll.totalVotes == 0) revert NoVotesCast();
@@ -195,11 +237,14 @@ contract Polls {
     function getPoll(uint256 _pollId) external view returns (Poll memory) {
         if (_pollId >= polls.length) revert Unauthorized();
         Poll memory poll = polls[_pollId];
-        poll.internalStatus = getStatus(_pollId); // Cập nhật trạng thái thực tế trước khi trả về
+        poll.internalStatus = getStatus(_pollId);
         return poll;
     }
 
-    function getOptionVotes(uint256 _pollId, uint256 _optionIndex) external view returns (uint256) {
+    function getOptionVotes(
+        uint256 _pollId,
+        uint256 _optionIndex
+    ) external view returns (uint256) {
         return pollOptionVotes[_pollId][_optionIndex];
     }
 
@@ -207,7 +252,9 @@ contract Polls {
         return polls.length;
     }
 
-    function getUserStats(address _user) external view returns (uint256 pollsCreated, uint256 totalVotesReceived) {
+    function getUserStats(
+        address _user
+    ) external view returns (uint256 pollsCreated, uint256 totalVotesReceived) {
         uint256[] memory userPollIds = userPolls[_user];
         pollsCreated = userPollIds.length;
         for (uint256 i = 0; i < userPollIds.length; i++) {
@@ -215,7 +262,10 @@ contract Polls {
         }
     }
 
-    function getUserPollsByStatus(address _user, PollStatus _status) external view returns (uint256[] memory) {
+    function getUserPollsByStatus(
+        address _user,
+        PollStatus _status
+    ) external view returns (uint256[] memory) {
         uint256[] memory allUserPolls = userPolls[_user];
         uint256 count = 0;
         for (uint256 i = 0; i < allUserPolls.length; i++) {

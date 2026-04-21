@@ -15,6 +15,8 @@ import {
   IconUnlink,
 } from "@tabler/icons-react";
 import SuccessAlert from "@/components/success-alert";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 
 export const Route = createFileRoute("/_authenticated/polls/$pollId")({
   component: PollDetailComponent,
@@ -60,72 +62,74 @@ function PollDetailComponent() {
   return (
     <div className="py-12 max-w-4xl mx-auto space-y-12 container px-4">
       <div className="flex items-center justify-between">
-        <Button variant="outline" size="default" asChild>
+        <Button variant="secondary" size="default" asChild>
           <Link to="/dashboard">
             <IconArrowLeft /> Trở về
           </Link>
         </Button>
-        <Button variant="outline" size="default" className="ml-auto ">
-          <IconShare2 /> Chia sẻ
-        </Button>
-        <Button variant="outline" size="default" className="ml-2 ">
-          <IconDotsVertical />
-        </Button>
+        <ButtonGroup>
+          <Button variant="secondary">
+            <IconShare2 /> Chia sẻ
+          </Button>
+          <ButtonGroupSeparator />
+          <Button size="icon" variant="secondary">
+            <IconDotsVertical />
+          </Button>
+        </ButtonGroup>
       </div>
+      <Card>
+        <CardHeader>
+          <PollDetailHeader poll={poll} />
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col">
+            <div className="md:col-span-8 space-y-4">
+              <div className="">
+                <h3 className="text-md font-medium uppercase">{canVote ? "Lựa chọn của bạn" : "Kết quả"}</h3>
+                {canVote ?? (
+                  <span className="text-muted-foreground text-xs">
+                    {poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}
+                  </span>
+                )}
+              </div>
 
-      <PollDetailHeader poll={poll} />
-
-      <div className="flex flex-col">
-        <div className="md:col-span-8 space-y-8">
-          <div className="">
-            <h3 className="text-lg font-medium uppercase">{canVote ? "Lựa chọn của bạn" : "Kết quả"}</h3>
-            {canVote ?? (
-              <span className="text-muted-foreground text-xs">
-                {poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}
-              </span>
-            )}
-          </div>
-
-          {canVote ? (
-            <div className="space-y-6">
-              <PollVoteForm poll={poll} onVote={handleVote} />
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {hasVoted && (
-                <SuccessAlert
-                  icon={<IconCheck />}
-                  title="Đã Bầu Chọn"
-                  description="Bạn đã tham gia cuộc bầu chọn này. Phiếu bầu đã được ghi nhận trên chuỗi."
-                />
-              )}
-              {analytics ? (
-                <PollResults analytics={analytics} />
+              {canVote ? (
+                <div className="space-y-6">
+                  <PollVoteForm poll={poll} onVote={handleVote} />
+                </div>
               ) : (
-                <p className="text-muted-foreground py-8 text-sm">Chưa có dữ liệu phân tích.</p>
+                <div className="space-y-6">
+                  {hasVoted && (
+                    <SuccessAlert
+                      icon={<IconCheck />}
+                      title="Đã Bầu Chọn"
+                      description="Bạn đã tham gia cuộc bầu chọn này. Phiếu bầu đã được ghi nhận trên chuỗi."
+                    />
+                  )}
+                  {analytics ? (
+                    <PollResults analytics={analytics} />
+                  ) : (
+                    <p className="text-muted-foreground py-8 text-sm">Chưa có dữ liệu phân tích.</p>
+                  )}
+                </div>
               )}
             </div>
-          )}
-        </div>
-
-        <div className="md:col-span-4 space-y-8">
-          <div className="space-y-4">
-            <h4 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">Blockchain</h4>
-            <div className="p-4 rounded-xl border border-border/50 space-y-4 bg-muted/10">
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Mạng lưới</span>
-                <span className="text-sm font-medium flex items-center gap-1.5">
-                  <ShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia
-                </span>
-              </div>
-              <div className="space-y-1 pt-2 border-t border-border/50">
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Smart Contract</span>
-                <span className="text-xs font-mono break-all text-muted-foreground">0x000000000000000000</span>
-              </div>
+          </div>
+        </CardContent>
+      </Card>
+      <div className="md:col-span-4 space-y-8">
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl border border-border/50 space-y-4 bg-muted/10">
+            <div className="space-y-1">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Mạng lưới</span>
+              <span className="text-sm font-medium flex items-center gap-1.5">
+                <ShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia
+              </span>
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Tất cả dữ liệu được lưu trữ vĩnh viễn và không thể giả mạo.
-            </p>
+            <div className="space-y-1 pt-2 border-t border-border/50">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Smart Contract</span>
+              <span className="text-xs font-mono break-all text-muted-foreground">0x000000000000000000</span>
+            </div>
           </div>
         </div>
       </div>

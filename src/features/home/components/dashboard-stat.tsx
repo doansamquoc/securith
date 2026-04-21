@@ -20,7 +20,7 @@ const DashboardStat = () => {
       countEffect: false,
     },
     {
-      label: "Chiến dịch đã tạo",
+      label: "Bầu chọn đã tạo",
       value: MOCK_USER_STATS.pollsCreated.toString(),
       icon: <IconChartLine />,
       description: "Tổng số cuộc bầu chọn bạn đã tạo",
@@ -49,9 +49,9 @@ const DashboardStat = () => {
               <IconChartLine className="mr-2 h-4 w-4" /> Xem thống kê
             </Link>
           </Button>
-          <Button className="" asChild>
+          <Button className="grow" asChild>
             <Link to="/create">
-              <IconPlus className="mr-2 h-4 w-4" /> Tạo bầu chọn mới
+              <IconPlus className="mr-2 h-4 w-4" /> Tạo bầu chọn
             </Link>
           </Button>
         </div>

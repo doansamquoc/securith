@@ -1,7 +1,10 @@
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import type { Poll } from "../types";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import { User, Calendar } from "lucide-react";
+import { PollStatusBadge } from "./poll-status-badge";
+import { Badge } from "@/components/ui/badge";
+import { ShieldCheck } from "lucide-react";
 
 interface PollDetailHeaderProps {
   poll: Poll;
@@ -11,7 +14,7 @@ export function PollDetailHeader({ poll }: PollDetailHeaderProps) {
   const endDate = new Date(Number(poll.endsAt) * 1000);
 
   return (
-    <div className="space-y-8 pb-10">
+    <div>
       {/* <div className="flex flex-wrap items-center gap-3">
         <PollStatusBadge status={poll.status} />
         {poll.settings.multiChoice && (
@@ -28,34 +31,22 @@ export function PollDetailHeader({ poll }: PollDetailHeaderProps) {
         </Badge>
       </div> */}
 
-      <div className="space-y-4">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">{poll.title}</h1>
-        <p className="text-xl text-muted-foreground leading-relaxed max-w-4xl font-light italic">{poll.description}</p>
-      </div>
+      <CardTitle className="text-2xl font-bold tracking-tight text-foreground">{poll.title}</CardTitle>
+      <CardDescription className="text-md text-muted-foreground">{poll.description}</CardDescription>
 
-      <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
-        <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-            <User className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Người tạo</p>
-            <p className="text-sm font-mono font-medium">
-              {poll.creator.slice(0, 6)}...{poll.creator.slice(-4)}
-            </p>
-          </div>
+      {/* <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
+        <div>
+          <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Người tạo</p>
+          <p className="text-sm font-medium">
+            {poll.creator.slice(0, 6)}...{poll.creator.slice(-4)}
+          </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-            <Calendar className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Thời hạn kết thúc</p>
-            <p className="text-sm font-medium">{format(endDate, "PPPp", { locale: vi })}</p>
-          </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Thời hạn kết thúc</p>
+          <p className="text-sm font-medium">{format(endDate, "PPPp", { locale: vi })}</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
