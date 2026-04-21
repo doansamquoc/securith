@@ -44,60 +44,56 @@ export function CreatePollForm() {
     }
   }, [noDeadline, form]);
 
-  const { mutate: sendTransaction } = useSendTransaction();
-  const [isCreating, setIsCreating] = React.useState(false);
+  const { mutateAsync } = useSendTransaction({ payModal: false });
+  async function onSubmit(data: CreatePollInput) {
+    const pendingToast = toast.loading("Đang chuẩn bị...");
+    try {
+      const transaction = createPoll({
+        contract,
+        title: data.title,
+        desc: data.description ?? "",
+        options: data.options.map((o) => o.value),
+        // Add 1 minute buffer to the start time to account for transaction processing time
+        startsAt: toUnixBigInt(new Date(data.startsAt.getTime() + 60 * 1000)),
+        endsAt: toUnixBigInt(data.endsAt),
+        settings: {
+          multiChoice: data.settings.multiChoice,
+          noDeadline: data.settings.noDeadline,
+          resultVisibility: data.settings.resultVisibility,
+        },
+      });
 
-  function onSubmit(data: CreatePollInput) {
-    const pendingToast = toast.loading("Đang tạo cuộc bầu chọn...");
-    setIsCreating(true);
+      toast.loading("Đang tạo cuộc bầu chọn...", { id: pendingToast });
 
-    const transaction = createPoll({
-      contract,
-      title: data.title,
-      desc: data.description ?? "",
-      options: data.options.map((o) => o.value),
-      startsAt: toUnixBigInt(data.startsAt),
-      endsAt: toUnixBigInt(data.endsAt),
-      settings: {
-        multiChoice: data.settings.multiChoice,
-        noDeadline: data.settings.noDeadline,
-        resultVisibility: data.settings.resultVisibility,
-      },
-    });
+      const result = await mutateAsync(transaction);
+      const receipt = await waitForReceipt({
+        client,
+        chain: contract.chain,
+        transactionHash: result.transactionHash,
+      });
 
-    sendTransaction(transaction, {
-      onSuccess: async (result) => {
-        console.log("Transaction thành công:", result.transactionHash);
-        const receipt = await waitForReceipt({
-          client,
-          chain: contract.chain,
-          transactionHash: result.transactionHash,
-        });
+      // Parse event logs to get the created poll ID
+      const logs = parseEventLogs({
+        events: [pollCreatedEvent()],
+        logs: receipt.logs,
+      });
 
-        const logs = parseEventLogs({
-          events: [pollCreatedEvent()],
-          logs: receipt.logs,
-        });
+      // If the poll was created successfully, show a success message with the poll ID
+      if (logs.length > 0) {
+        toast.success(`Tạo thành công poll #${logs[0].args.pollId}!`, { id: pendingToast });
+      }
 
-        if (logs.length > 0) {
-          const { pollId } = logs[0].args;
-          toast.success("Tạo thành công!", {
-            id: pendingToast,
-            action: {
-              label: "Xem chi tiết",
-              onClick: () => console.log("Đi đến trang chi tiết của Poll ID:", pollId.toString()),
-            },
-          });
-        }
-        form.reset();
-        setIsCreating(false);
-      },
-      onError: (error) => {
-        console.error("Lỗi khi gửi transaction:", error);
-        toast.error("Có lỗi xảy ra, vui lòng thử lại.");
-        setIsCreating(false);
-      },
-    });
+      // console.log("Transaction Data:", transactionData);
+      form.reset();
+    } catch (error: any) {
+      console.error(error);
+      if (error.message.includes("PollMustStartInTheFuture")) {
+        form.setError("startsAt", { message: "Thời gian bắt đầu phải nằm trong tương lai." });
+        toast.error("Thời gian bắt đầu phải nằm trong tương lai.", { id: pendingToast });
+      } else {
+        toast.error("Có lỗi xảy ra, vui lòng thử lại.", { id: pendingToast });
+      }
+    }
   }
 
   return (
