@@ -170,55 +170,53 @@ export function CreatePollForm() {
           </CardHeader>
           <CardContent>
             <FieldGroup>
-              <>
-                {optionFields.map((item, index) => (
-                  <Controller
-                    key={item.id}
-                    name={`options.${index}.value` as const}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field>
-                        <InputGroup>
-                          <InputGroupInput {...field} placeholder={`Lựa chọn ${index + 1}...`} />
-                          {optionFields.length > 2 && (
-                            <InputGroupAddon align={"inline-end"}>
-                              <InputGroupButton onClick={() => remove(index)}>
-                                <IconTrash />
-                              </InputGroupButton>
-                            </InputGroupAddon>
-                          )}
-                        </InputGroup>
+              {optionFields.map((item, index) => (
+                <Controller
+                  key={item.id}
+                  name={`options.${index}.value` as const}
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field>
+                      <InputGroup>
+                        <InputGroupInput {...field} placeholder={`Lựa chọn ${index + 1}...`} />
+                        {optionFields.length > 2 && (
+                          <InputGroupAddon align={"inline-end"}>
+                            <InputGroupButton onClick={() => remove(index)}>
+                              <IconTrash />
+                            </InputGroupButton>
+                          </InputGroupAddon>
+                        )}
+                      </InputGroup>
 
-                        {fieldState.error && <FieldError errors={[fieldState.error]} />}
-                      </Field>
-                    )}
-                  />
-                ))}
-                <div className="flex flex-row gap-2">
-                  {optionFields.length > 2 && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="border-dashed hover:text-destructive"
-                      onClick={() => replace([{ value: "" }, { value: "" }])}
-                    >
-                      Xóa tất cả
-                    </Button>
+                      {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                    </Field>
                   )}
-                  {optionFields.length < 10 && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="border-dashed grow"
-                      onClick={() => append({ value: "" })}
-                    >
-                      Thêm phương án
-                    </Button>
-                  )}
-                </div>
-              </>
+                />
+              ))}
+              <div className="flex flex-row gap-2">
+                {optionFields.length > 2 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="border-dashed hover:text-destructive"
+                    onClick={() => replace([{ value: "" }, { value: "" }])}
+                  >
+                    Xóa tất cả
+                  </Button>
+                )}
+                {optionFields.length < 10 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="border-dashed grow"
+                    onClick={() => append({ value: "" })}
+                  >
+                    Thêm phương án
+                  </Button>
+                )}
+              </div>
             </FieldGroup>
           </CardContent>
         </Card>
