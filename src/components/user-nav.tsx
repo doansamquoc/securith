@@ -16,16 +16,7 @@ import {
 import { useUser } from "@/hooks/use-user";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useTheme } from "./theme-provider";
-import {
-  IconCheck,
-  IconChevronDown,
-  IconDeviceDesktop,
-  IconLogout,
-  IconMoon,
-  IconSettings,
-  IconSun,
-  IconUserCircle,
-} from "@tabler/icons-react";
+import { IconCheck, IconChevronDown, IconDeviceDesktop, IconLogout, IconMoon, IconSettings, IconSun, IconUserCircle } from "@tabler/icons-react";
 import { ShimmerSkeleton } from "./unlumen-ui/shimmer-skeleton";
 
 const UserNav = () => {
@@ -46,9 +37,9 @@ const UserNav = () => {
   ];
 
   const themeOptions = [
-    { label: "Light", value: "light", icon: IconSun },
-    { label: "Dark", value: "dark", icon: IconMoon },
-    { label: "System", value: "system", icon: IconDeviceDesktop },
+    { label: "Sáng", value: "light", icon: IconSun },
+    { label: "Tối", value: "dark", icon: IconMoon },
+    { label: "Hệ thống", value: "system", icon: IconDeviceDesktop },
   ];
 
   return (
@@ -64,20 +55,16 @@ const UserNav = () => {
           </Avatar>
           <div className="hidden sm:flex flex-col items-start text-left pr-1">
             <span className="text-xs font-bold leading-none">{shortAddress}</span>
-            <span className="text-[10px] text-muted-foreground leading-none mt-1">
-              {wallet?.id === "inApp" ? "Smart Account" : "External Wallet"}
-            </span>
+            <span className="text-[10px] text-muted-foreground leading-none mt-1">{wallet?.id === "inApp" ? "Smart Account" : "External Wallet"}</span>
           </div>
-          <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+          <IconChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none text-muted-foreground uppercase tracking-wider text-[10px]">
-                Active Wallet
-              </p>
+              <p className="text-sm font-medium leading-none text-muted-foreground uppercase tracking-wider text-[10px]">Active Wallet</p>
               <p className="text-xs font-mono font-medium truncate">{address}</p>
             </div>
           </DropdownMenuLabel>
@@ -86,7 +73,7 @@ const UserNav = () => {
           <DropdownMenuGroup>
             {menuItems.map((item) => (
               <DropdownMenuItem key={item.label}>
-                <item.icon className="mr-2 h-4 w-4" />
+                <item.icon className="mr-2" />
                 <span>{item.label}</span>
               </DropdownMenuItem>
             ))}
@@ -97,23 +84,19 @@ const UserNav = () => {
           <DropdownMenuGroup>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <IconSun className="mr-2 h-4 w-4 dark:hidden" />
-                <IconMoon className="mr-2 h-4 w-4 hidden dark:block" />
-                <span>Theme</span>
+                <IconSun className="mr-2 dark:hidden" />
+                <IconMoon className="mr-2 hidden dark:block" />
+                <span>Giao diện</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   {themeOptions.map((option) => (
-                    <DropdownMenuItem
-                      key={option.value}
-                      onClick={() => setTheme(option.value as any)}
-                      className="flex items-center justify-between"
-                    >
+                    <DropdownMenuItem key={option.value} onClick={() => setTheme(option.value as any)} className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <option.icon className="mr-2 h-4 w-4" />
+                        <option.icon className="mr-2" />
                         <span>{option.label}</span>
                       </div>
-                      {theme === option.value && <IconCheck className="h-4 w-4" />}
+                      {theme === option.value && <IconCheck />}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuSubContent>
@@ -123,12 +106,9 @@ const UserNav = () => {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            className="text-destructive focus:text-destructive cursor-pointer focus:bg-destructive/10"
-            onClick={() => wallet && disconnect(wallet)}
-          >
-            <IconLogout className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+          <DropdownMenuItem variant="destructive" onClick={() => wallet && disconnect(wallet)}>
+            <IconLogout className="mr-2" />
+            <span>Đăng xuất</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenuPortal>
