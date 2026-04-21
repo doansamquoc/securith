@@ -4,9 +4,6 @@ import { inAppWallet } from "thirdweb/wallets";
 const THIRDWEB_CLIENT_ID = import.meta.env.VITE_THIRDWEB_CLIENT_ID;
 const THIRDWEB_SECRET_KEY = import.meta.env.VITE_THIRDWEB_SECRET_KEY;
 
-console.log("CLIENT ID:" + THIRDWEB_CLIENT_ID);
-console.log("SECRET KEY:" + THIRDWEB_SECRET_KEY);
-
 export const client = createThirdwebClient({
   clientId: THIRDWEB_CLIENT_ID,
   secretKey: THIRDWEB_SECRET_KEY,
@@ -23,6 +20,8 @@ export const wallets = [
     },
   }),
 ];
+
+export const wallet = inAppWallet({ executionMode: { mode: "EIP4337", smartAccount: { chain: baseSepolia, sponsorGas: true } } });
 
 export const contract = getContract({
   client,
