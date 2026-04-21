@@ -1,4 +1,4 @@
-import { createThirdwebClient } from "thirdweb";
+import { createThirdwebClient, getContract } from "thirdweb";
 import { baseSepolia } from "thirdweb/chains";
 import { inAppWallet } from "thirdweb/wallets";
 const THIRDWEB_CLIENT_ID = import.meta.env.VITE_THIRDWEB_CLIENT_ID;
@@ -24,9 +24,8 @@ export const wallets = [
   }),
 ];
 
-export const wallet = inAppWallet({
-  executionMode: {
-    mode: "EIP4337",
-    smartAccount: { chain: baseSepolia, sponsorGas: true },
-  },
+export const contract = getContract({
+  client,
+  chain: baseSepolia,
+  address: "0x45916BD6882E0e15dFc92c1d74745d910fb62e17",
 });

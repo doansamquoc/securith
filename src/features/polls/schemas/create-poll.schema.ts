@@ -36,3 +36,16 @@ export const createPollSchema = z
   });
 
 export type CreatePollInput = z.infer<typeof createPollSchema>;
+
+export const defaultValues: CreatePollInput = {
+  title: "",
+  description: "",
+  options: [{ value: "" }, { value: "" }],
+  startsAt: new Date(),
+  endsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  settings: {
+    multiChoice: false,
+    noDeadline: false,
+    resultVisibility: 0,
+  },
+};
