@@ -1,4 +1,4 @@
-import { Database, Search, FileText } from "lucide-react";
+import { IconDatabase, IconFileText, IconSearch } from "@tabler/icons-react";
 
 export const Transparency = () => {
   return (
@@ -8,7 +8,8 @@ export const Transparency = () => {
           <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
-                Absolute trust via<br/>
+                Absolute trust via
+                <br />
                 on-chain data.
               </h2>
               <p className="text-xl text-muted-foreground leading-relaxed">
@@ -19,17 +20,17 @@ export const Transparency = () => {
             <div className="space-y-8">
               {[
                 {
-                  icon: Database,
+                  icon: IconDatabase,
                   title: "Distributed data",
                   desc: "Votes are not stored in a single server but are distributed across the network nodes.",
                 },
                 {
-                  icon: Search,
+                  icon: IconSearch,
                   title: "Publicly verifiable",
                   desc: "Anyone can query raw data directly from the contract to audit results.",
                 },
                 {
-                  icon: FileText,
+                  icon: IconFileText,
                   title: "Open source",
                   desc: "Our smart contracts are public and audited to ensure transparent, fair logic.",
                 },
@@ -49,22 +50,22 @@ export const Transparency = () => {
 
           <div className="rounded-xl border bg-muted/20 p-8">
             <div className="font-mono text-xs text-muted-foreground space-y-4">
-                <div className="flex justify-between border-b pb-4">
-                    <span>STATUS:</span>
-                    <span className="text-foreground">OPERATIONAL</span>
-                </div>
-                <div className="flex justify-between border-b pb-4">
-                    <span>NETWORK:</span>
-                    <span className="text-foreground">BASE SEPOLIA</span>
-                </div>
-                <div className="flex justify-between border-b pb-4">
-                    <span>CONTRACT:</span>
-                    <span className="text-primary">0x5f...9a12</span>
-                </div>
-                <div className="flex justify-between pb-4">
-                    <span>LAST AUDIT:</span>
-                    <span className="text-foreground">2026-04-18</span>
-                </div>
+              <div className="flex justify-between border-b pb-4">
+                <span>STATUS:</span>
+                <span className="text-foreground">OPERATIONAL</span>
+              </div>
+              <div className="flex justify-between border-b pb-4">
+                <span>NETWORK:</span>
+                <span className="text-foreground">BASE SEPOLIA</span>
+              </div>
+              <div className="flex justify-between border-b pb-4">
+                <span>CONTRACT:</span>
+                <span className="text-primary">0x5f...9a12</span>
+              </div>
+              <div className="flex justify-between pb-4">
+                <span>LAST AUDIT:</span>
+                <span className="text-foreground">2026-04-18</span>
+              </div>
             </div>
           </div>
         </div>

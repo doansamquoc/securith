@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { IconArrowRight } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -25,7 +25,7 @@ export const Hero = () => {
             <Button size="lg" className="rounded-full px-8" asChild>
               <Link to="/login">
                 Get started
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <IconArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>

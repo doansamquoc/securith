@@ -1,10 +1,5 @@
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import type { Poll } from "../types";
-import { format } from "date-fns";
-import { vi } from "date-fns/locale";
-import { PollStatusBadge } from "./poll-status-badge";
-import { Badge } from "@/components/ui/badge";
-import { ShieldCheck } from "lucide-react";
 
 interface PollDetailHeaderProps {
   poll: Poll;

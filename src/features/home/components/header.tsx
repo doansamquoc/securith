@@ -3,17 +3,9 @@ import UserNav from "@/components/user-nav";
 import { Link, useLocation } from "@tanstack/react-router";
 import { useActiveAccount } from "thirdweb/react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-  SheetClose,
-} from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter, SheetClose } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { IconMenu2 } from "@tabler/icons-react";
 
 const Header = () => {
   const account = useActiveAccount();
@@ -56,7 +48,7 @@ const Header = () => {
         <Sheet>
           <SheetTrigger className="md:hidden" asChild>
             <Button variant="ghost" size="default">
-              <Menu />
+              <IconMenu2 />
               <span className="uppercase">Menu</span>
               <span className="sr-only">Toggle Menu</span>
             </Button>
@@ -87,10 +79,10 @@ const Header = () => {
               {!account && (
                 <div className="flex flex-col gap-2">
                   <Button variant="outline" className="w-full justify-start" asChild>
-                    <Link to="/login">Sign in</Link>
+                    <Link to="/login">Đăng nhập</Link>
                   </Button>
                   <Button className="w-full justify-start" asChild>
-                    <Link to="/login">Get started</Link>
+                    <Link to="/login">Bắt đầu</Link>
                   </Button>
                 </div>
               )}
@@ -106,10 +98,10 @@ const Header = () => {
             ) : (
               <>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link to="/login">Sign in</Link>
+                  <Link to="/login">Đăng nhập</Link>
                 </Button>
                 <Button size="sm" asChild>
-                  <Link to="/login">Get started</Link>
+                  <Link to="/login">Bắt đầu</Link>
                 </Button>
               </>
             )}

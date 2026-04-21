@@ -1,9 +1,7 @@
 import type { PollAnalytics } from "../types";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users2, Target } from "lucide-react";
-import { IconChartLine, IconUsersGroup } from "@tabler/icons-react";
+import { IconChartLine, IconTargetArrow, IconUsersGroup } from "@tabler/icons-react";
 
 interface PollResultsProps {
   analytics: PollAnalytics;
@@ -35,7 +33,7 @@ export function PollResults({ analytics }: PollResultsProps) {
       <div>
         <div className="pb-2">
           <div className="text-sm font-semibold flex items-center gap-2 text-muted-foreground">
-            <Target className="h-4 w-4" />
+            <IconTargetArrow className="h-4 w-4" />
             Chi tiết kết quả
           </div>
         </div>
@@ -47,31 +45,19 @@ export function PollResults({ analytics }: PollResultsProps) {
               <div key={index} className="space-y-3">
                 <div className="flex justify-between items-end gap-4">
                   <div className="space-y-1">
-                    <span
-                      className={cn(
-                        "text-sm font-semibold transition-colors",
-                        isWinner ? "text-primary" : "text-foreground/80",
-                      )}
-                    >
+                    <span className={cn("text-sm font-semibold transition-colors", isWinner ? "text-primary" : "text-foreground/80")}>
                       {item.option}
                       {isWinner && (
-                        <span className="ml-2 text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded uppercase tracking-tighter">
-                          Dẫn đầu
-                        </span>
+                        <span className="ml-2 text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded uppercase tracking-tighter">Dẫn đầu</span>
                       )}
                     </span>
                   </div>
                   <div className="text-right">
                     <span className="text-sm font-bold tabular-nums">{item.percentage.toFixed(1)}%</span>
-                    <span className="text-[10px] text-muted-foreground block tabular-nums">
-                      {item.votes.toLocaleString()} phiếu
-                    </span>
+                    <span className="text-[10px] text-muted-foreground block tabular-nums">{item.votes.toLocaleString()} phiếu</span>
                   </div>
                 </div>
-                <Progress
-                  value={item.percentage}
-                  className={cn("h-2.5 bg-muted/50", isWinner ? "[&>div]:bg-primary" : "[&>div]:bg-primary/30")}
-                />
+                <Progress value={item.percentage} className={cn("h-2.5 bg-muted/50", isWinner ? "[&>div]:bg-primary" : "[&>div]:bg-primary/30")} />
               </div>
             );
           })}

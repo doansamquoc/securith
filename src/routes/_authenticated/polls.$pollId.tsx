@@ -1,19 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck } from "lucide-react";
 import { MOCK_POLLS, MOCK_POLL_ANALYTICS, MOCK_VOTER_DETAILS, PollStatus } from "@/features/polls";
 import { PollDetailHeader } from "@/features/polls/components/poll-detail-header";
 import { PollVoteForm } from "@/features/polls/components/poll-vote-form";
 import { PollResults } from "@/features/polls/components/poll-results";
 import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import {
-  IconArrowLeft,
-  IconCheck,
-  IconDotsVertical,
-  IconExternalLink,
-  IconShare2,
-  IconUnlink,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconCheck, IconDotsVertical, IconExternalLink, IconShare2, IconShieldCheck, IconUnlink } from "@tabler/icons-react";
 import SuccessAlert from "@/components/success-alert";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
@@ -86,11 +78,7 @@ function PollDetailComponent() {
             <div className="md:col-span-8 space-y-4">
               <div className="">
                 <h3 className="text-md font-medium uppercase">{canVote ? "Lựa chọn của bạn" : "Kết quả"}</h3>
-                {canVote ?? (
-                  <span className="text-muted-foreground text-xs">
-                    {poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}
-                  </span>
-                )}
+                {canVote ?? <span className="text-muted-foreground text-xs">{poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}</span>}
               </div>
 
               {canVote ? (
@@ -106,11 +94,7 @@ function PollDetailComponent() {
                       description="Bạn đã tham gia cuộc bầu chọn này. Phiếu bầu đã được ghi nhận trên chuỗi."
                     />
                   )}
-                  {analytics ? (
-                    <PollResults analytics={analytics} />
-                  ) : (
-                    <p className="text-muted-foreground py-8 text-sm">Chưa có dữ liệu phân tích.</p>
-                  )}
+                  {analytics ? <PollResults analytics={analytics} /> : <p className="text-muted-foreground py-8 text-sm">Chưa có dữ liệu phân tích.</p>}
                 </div>
               )}
             </div>
@@ -123,7 +107,7 @@ function PollDetailComponent() {
             <div className="space-y-1">
               <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Mạng lưới</span>
               <span className="text-sm font-medium flex items-center gap-1.5">
-                <ShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia
+                <IconShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia
               </span>
             </div>
             <div className="space-y-1 pt-2 border-t border-border/50">
