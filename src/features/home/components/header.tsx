@@ -14,7 +14,6 @@ const Header = () => {
   const navLinks = account
     ? [
         { label: "Bảng Điều Khiển", href: "/dashboard" },
-        { label: "Thống Kê", href: "/analytics" },
         { label: "Tạo Mới", href: "/create" },
       ]
     : [
@@ -23,7 +22,7 @@ const Header = () => {
       ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Desktop navigation */}
         <div className="hidden md:flex items-center gap-4 md:gap-8">
@@ -78,11 +77,8 @@ const Header = () => {
             <SheetFooter>
               {!account && (
                 <div className="flex flex-col gap-2">
-                  <Button variant="outline" className="w-full justify-start" asChild>
-                    <Link to="/login">Đăng nhập</Link>
-                  </Button>
                   <Button className="w-full justify-start" asChild>
-                    <Link to="/login">Bắt đầu</Link>
+                    <Link to="/login">Đăng nhập</Link>
                   </Button>
                 </div>
               )}
@@ -97,11 +93,8 @@ const Header = () => {
               <UserNav />
             ) : (
               <>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/login">Đăng nhập</Link>
-                </Button>
                 <Button size="sm" asChild>
-                  <Link to="/login">Bắt đầu</Link>
+                  <Link to="/login">Đăng nhập</Link>
                 </Button>
               </>
             )}
