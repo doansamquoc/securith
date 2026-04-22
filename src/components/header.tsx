@@ -3,7 +3,7 @@ import UserNav from "@/components/user-nav";
 import { Link, useLocation } from "@tanstack/react-router";
 import { useActiveAccount } from "thirdweb/react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter, SheetClose, SheetDescription } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { IconMenu2 } from "@tabler/icons-react";
 
@@ -53,8 +53,9 @@ const Header = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" showCloseButton={false}>
-            <SheetHeader className="flex flex-row">
+            <SheetHeader>
               <SheetTitle>MENU</SheetTitle>
+              <SheetDescription></SheetDescription>
             </SheetHeader>
 
             <div className="flex flex-col px-4 gap-4">
