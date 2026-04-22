@@ -43,9 +43,7 @@ export function PollList({ polls, title, description }: PollListProps) {
       {/* Header Info */}
       <div className="space-y-1">
         <h2 className="text-2xl font-bold tracking-tight uppercase">{title}</h2>
-        {description && (
-          <p className="text-muted-foreground text-xs uppercase tracking-widest font-bold">{description}</p>
-        )}
+        {description && <p className="text-muted-foreground text-xs uppercase tracking-widest font-bold">{description}</p>}
       </div>
 
       {/* Main List Container */}
@@ -54,11 +52,7 @@ export function PollList({ polls, title, description }: PollListProps) {
         <div className="flex flex-col md:flex-row justify-between gap-2">
           {/* Search input */}
           <InputGroup className="max-w-sm">
-            <InputGroupInput
-              placeholder="Tìm kiếm..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <InputGroupInput placeholder="Tìm kiếm..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
             <InputGroupAddon>
               <IconSearch />
             </InputGroupAddon>
@@ -67,10 +61,7 @@ export function PollList({ polls, title, description }: PollListProps) {
 
           <div className="flex flex-col md:flex-row gap-2">
             {/* Status Filter */}
-            <Select
-              value={statusFilter.toString()}
-              onValueChange={(val) => setStatusFilter(val === "All" ? "All" : (Number(val) as PollStatus))}
-            >
+            <Select value={statusFilter.toString()} onValueChange={(val) => setStatusFilter(val === "All" ? "All" : (Number(val) as PollStatus))}>
               <SelectTrigger className="w-full md:w-auto">
                 <SelectValue placeholder="Trạng thái" />
               </SelectTrigger>

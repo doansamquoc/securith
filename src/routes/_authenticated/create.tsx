@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CreatePollForm } from "@/features/polls/components/create-poll-form";
+import { CreatePollForm } from "@/features/poll/components/create-poll-form";
 
 export const Route = createFileRoute("/_authenticated/create")({
   component: CreatePollPageComponent,

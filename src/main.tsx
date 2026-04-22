@@ -7,7 +7,7 @@ import { ThirdwebProvider } from "thirdweb/react";
 import { ThemeProvider } from "./components/theme-provider";
 import { client } from "./lib/thirdweb";
 import { useActiveAccount, useAutoConnect } from "thirdweb/react";
-import { AppProvider } from "./providers/app-provider";
+import { AppProvider } from "./components/app-provider";
 import { TooltipProvider } from "./components/ui/tooltip";
 
 const router = createRouter({

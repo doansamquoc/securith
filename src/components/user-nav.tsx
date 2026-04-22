@@ -16,8 +16,10 @@ import {
 import { useUser } from "@/hooks/use-user";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useTheme } from "./theme-provider";
-import { IconCheck, IconChevronDown, IconDeviceDesktop, IconLogout, IconMoon, IconSettings, IconSun, IconUserCircle } from "@tabler/icons-react";
+import { IconCheck, IconChevronDown, IconCopy, IconDeviceDesktop, IconLogout, IconMoon, IconSettings, IconSun, IconUserCircle } from "@tabler/icons-react";
 import { ShimmerSkeleton } from "./unlumen-ui/shimmer-skeleton";
+import { shortenAddress } from "@/utils/utils";
+import CopyButton from "./copy-button";
 
 const UserNav = () => {
   const account = useActiveAccount();
@@ -29,7 +31,7 @@ const UserNav = () => {
   if (isLoading) return <ShimmerSkeleton className="h-10 w-32 rounded-full" />;
 
   const address = account?.address || "";
-  const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
+  // const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
 
   const menuItems = [
     { label: "Hồ Sơ", icon: IconUserCircle },
@@ -54,7 +56,7 @@ const UserNav = () => {
             <AvatarFallback>{address.slice(2, 4).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="hidden sm:flex flex-col items-start text-left pr-1">
-            <span className="text-xs font-bold leading-none">{shortAddress}</span>
+            <span className="text-xs font-bold leading-none">{shortenAddress(address)}</span>
             <span className="text-[10px] text-muted-foreground leading-none mt-1">{wallet?.id === "inApp" ? "Smart Account" : "External Wallet"}</span>
           </div>
           <IconChevronDown className="h-4 w-4" />
@@ -64,8 +66,11 @@ const UserNav = () => {
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none text-muted-foreground uppercase tracking-wider text-[10px]">Active Wallet</p>
-              <p className="text-xs font-mono font-medium truncate">{address}</p>
+              <p className="text-[12px] font-medium text-muted-foreground">Active Wallet</p>
+              <p className="text-xs font-mono font-medium truncate flex items-center justify-between">
+                <span>{shortenAddress(address)}</span>
+                <CopyButton textToCopy={address} size={"icon-xs"} variant={"outline"} />
+              </p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />

@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MOCK_POLLS, MOCK_POLL_ANALYTICS, MOCK_VOTER_DETAILS, PollStatus } from "@/features/polls";
-import { PollDetailHeader } from "@/features/polls/components/poll-detail-header";
-import { PollVoteForm } from "@/features/polls/components/poll-vote-form";
-import { PollResults } from "@/features/polls/components/poll-results";
+import { MOCK_POLLS, MOCK_POLL_ANALYTICS, MOCK_VOTER_DETAILS, PollStatus } from "@/features/poll";
+import { PollDetailHeader } from "@/features/poll/components/poll-detail-header";
+import { PollVoteForm } from "@/features/poll/components/poll-vote-form";
+import { PollResults } from "@/features/poll/components/poll-results";
 import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { IconArrowLeft, IconCheck, IconDotsVertical, IconExternalLink, IconShare2, IconShieldCheck, IconUnlink } from "@tabler/icons-react";
 import SuccessAlert from "@/components/success-alert";

@@ -19,7 +19,7 @@ import { useSendTransaction } from "thirdweb/react";
 import { createPoll, pollCreatedEvent } from "@/thirdweb/84532/0x45916bd6882e0e15dfc92c1d74745d910fb62e17";
 import { contract, client } from "@/lib/thirdweb";
 import { parseEventLogs, waitForReceipt } from "thirdweb";
-import { formatDateTimeLocal, getFormattedDuration, toUnixBigInt } from "@/features/polls/utils/date-utils";
+import { formatDateTimeLocal, getFormattedDuration, toUnixBigInt } from "@/features/poll/utils/date-utils";
 
 export function CreatePollForm() {
   const form = useForm<CreatePollInput>({
