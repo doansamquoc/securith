@@ -55,7 +55,7 @@ const Header = () => {
           <SheetContent side="left" showCloseButton={false}>
             <SheetHeader>
               <SheetTitle>MENU</SheetTitle>
-              <SheetDescription></SheetDescription>
+              <SheetDescription>{/* Warning avoid */}</SheetDescription>
             </SheetHeader>
 
             <div className="flex flex-col px-4 gap-4">
