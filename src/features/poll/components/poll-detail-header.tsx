@@ -1,5 +1,5 @@
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import type { Poll } from "../types";
+import type { Poll } from "../types/types";
 
 interface PollDetailHeaderProps {
   poll: Poll;

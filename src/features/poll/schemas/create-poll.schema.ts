@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PollResultVisibility } from "../types";
+import { PollResultVisibility } from "../types/types";
 
 export const createPollSchema = z
   .object({

@@ -1,12 +1,4 @@
-import {
-  type Poll,
-  PollStatus,
-  type PollResult,
-  type PollWinner,
-  type VoterDetails,
-  type PollAnalytics,
-  type UserStats,
-} from "./types";
+import { type Poll, PollStatus, type PollResult, type PollWinner, type VoterDetails, type PollAnalytics, type UserStats } from "./types/types";
 
 const MOCK_CREATOR = "0x1234567890123456789012345678901234567890";
 const MOCK_VOTER = "0x0987654321098765432109876543210987654321";

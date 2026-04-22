@@ -1,4 +1,4 @@
-import type { PollAnalytics } from "../types";
+import type { PollAnalytics } from "../types/types";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 import { IconChartLine, IconTargetArrow, IconUsersGroup } from "@tabler/icons-react";

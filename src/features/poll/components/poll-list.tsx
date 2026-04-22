@@ -1,19 +1,18 @@
 import { useState, useMemo } from "react";
-import { type Poll, PollStatus } from "../types";
+import { type Poll, PollStatus } from "../types/types";
 import { PollCard } from "./poll-card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { IconClearAll, IconFolderExclamation, IconPlus, IconSearch } from "@tabler/icons-react";
 import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import type { SortOption } from "../types/sort.type";
 
 interface PollListProps {
   polls: Poll[];
   title?: string;
   description?: string;
 }
-
-type SortOption = "newest" | "oldest" | "most-voted";
 
 export function PollList({ polls, title, description }: PollListProps) {
   const [searchQuery, setSearchQuery] = useState("");

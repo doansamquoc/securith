@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { PollStatus } from "../types";
+import { PollStatus } from "../types/types";
 import { cn } from "@/lib/utils";
 
 interface PollStatusBadgeProps {
@@ -17,8 +17,7 @@ export function PollStatusBadge({ status, className }: PollStatusBadgeProps) {
     [PollStatus.Active]: {
       label: "Đang diễn ra",
       variant: "default" as const,
-      className:
-        "bg-emerald-100 text-emerald-700 hover:bg-emerald-100/80 dark:bg-emerald-900/30 dark:text-emerald-400 border-none",
+      className: "bg-emerald-100 text-emerald-700 hover:bg-emerald-100/80 dark:bg-emerald-900/30 dark:text-emerald-400 border-none",
     },
     [PollStatus.Ended]: {
       label: "Đã kết thúc",
@@ -35,10 +34,7 @@ export function PollStatusBadge({ status, className }: PollStatusBadgeProps) {
   const config = statusConfig[status];
 
   return (
-    <Badge
-      variant={config.variant}
-      className={cn("px-2.5 py-0.5 font-medium shadow-none", config.className, className)}
-    >
+    <Badge variant={config.variant} className={cn("px-2.5 py-0.5 font-medium shadow-none", config.className, className)}>
       {config.label}
     </Badge>
   );

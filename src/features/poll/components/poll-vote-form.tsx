@@ -1,4 +1,4 @@
-import { type Poll } from "../types";
+import { type Poll } from "../types/types";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
@@ -41,11 +41,7 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
                 return (
                   <FieldLabel key={index}>
                     <Field orientation="horizontal">
-                      <Checkbox
-                        id={`option-${index}`}
-                        checked={isSelected}
-                        onCheckedChange={() => handleToggle(index)}
-                      />
+                      <Checkbox id={`option-${index}`} checked={isSelected} onCheckedChange={() => handleToggle(index)} />
                       <FieldContent>
                         <FieldTitle>{option}</FieldTitle>
                         <FieldDescription>This is description for {option}</FieldDescription>
@@ -56,11 +52,7 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
               })}
             </FieldGroup>
           ) : (
-            <RadioGroup
-              value={selected[0]?.toString()}
-              onValueChange={(val) => setSelected([parseInt(val)])}
-              className="gap-4"
-            >
+            <RadioGroup value={selected[0]?.toString()} onValueChange={(val) => setSelected([parseInt(val)])} className="gap-4">
               {poll.options.map((option, index) => {
                 return (
                   <FieldLabel key={index}>
