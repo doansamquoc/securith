@@ -1,6 +1,6 @@
 import { Spinner } from "@/components/ui/spinner";
-import Footer from "@/features/home/components/footer";
-import Header from "@/features/home/components/header";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import { client } from "@/lib/thirdweb";
 import { createFileRoute, redirect, Outlet, Navigate } from "@tanstack/react-router";
 import { useActiveAccount, useAutoConnect } from "thirdweb/react";

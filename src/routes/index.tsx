@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Header from "@/features/home/components/header";
-import Footer from "@/features/home/components/footer";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { Hero } from "@/features/home/components/hero";
 import { Features } from "@/features/home/components/features";
 import { CTASection } from "@/features/home/components/cta-section";
