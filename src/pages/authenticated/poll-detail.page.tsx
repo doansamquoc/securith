@@ -1,11 +1,9 @@
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { PollResultVisibility, PollStatus } from "@/features/poll";
+import { PollResultVisibility } from "@/features/poll";
 import { PollDetailHeader } from "@/features/poll/components/poll-detail-header";
 import { PollVoteForm } from "@/features/poll/components/poll-vote-form";
-import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import { IconArrowLeft, IconCheck, IconDotsVertical, IconExternalLink, IconShare2, IconShieldCheck, IconUnlink } from "@tabler/icons-react";
-import SuccessAlert from "@/components/success-alert";
+import { IconArrowLeft, IconDotsVertical, IconShare2, IconShieldCheck } from "@tabler/icons-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import { useGetPollDetails } from "@/features/poll/hooks/use-get-poll-details";
