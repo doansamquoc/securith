@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (

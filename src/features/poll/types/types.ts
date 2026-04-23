@@ -35,6 +35,17 @@ export interface Poll {
   settings: PollSettings;
 }
 
+export interface PollSummary {
+  readonly creator: string;
+  readonly id: bigint;
+  readonly title: string;
+  readonly pollVotes: bigint;
+  readonly status: number;
+  readonly startsAt: bigint;
+  readonly endsAt: bigint;
+  readonly createdAt: bigint;
+}
+
 export interface PollResult {
   pollId: string;
   results: bigint[];

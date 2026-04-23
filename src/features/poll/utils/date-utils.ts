@@ -38,3 +38,12 @@ export function formatDateTimeLocal(date: Date) {
 export function toUnixBigInt(date: Date) {
   return BigInt(Math.floor(date.getTime() / 1000));
 }
+
+export function fromUnixBigInt(unix: bigint) {
+  return new Date(Number(unix) * 1000);
+}
+
+export function formatUnixToVNDateString(unix: bigint) {
+  const date = fromUnixBigInt(unix);
+  return date.toLocaleDateString("vn", { day: "2-digit", month: "long", year: "numeric" });
+}

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { MOCK_USER_STATS } from "@/features/poll";
 import { IconWallet, IconChartLine, IconUsersGroup, IconPlus } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useActiveAccount } from "thirdweb/react";
 import StatCard from "../../landing/components/stat-card";
 import type { Stat } from "../../landing/types/stat.type";

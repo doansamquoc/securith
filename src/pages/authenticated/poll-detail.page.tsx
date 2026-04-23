@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MOCK_POLLS, MOCK_POLL_ANALYTICS, MOCK_VOTER_DETAILS, PollStatus } from "@/features/poll";
 import { PollDetailHeader } from "@/features/poll/components/poll-detail-header";
@@ -10,17 +10,13 @@ import SuccessAlert from "@/components/success-alert";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 
-export const Route = createFileRoute("/_authenticated/polls/$pollId")({
-  component: PollDetailComponent,
-});
-
-function PollDetailComponent() {
-  const { pollId } = Route.useParams();
+export default function PollDetailPage() {
+  const { pollId } = useParams();
 
   // Find poll from mock data
   const poll = MOCK_POLLS.find((p) => p.id === pollId);
-  const analytics = MOCK_POLL_ANALYTICS[pollId];
-  const voterDetails = MOCK_VOTER_DETAILS[pollId];
+  const analytics = pollId ? MOCK_POLL_ANALYTICS[pollId] : undefined;
+  const voterDetails = pollId ? MOCK_VOTER_DETAILS[pollId] : undefined;
 
   if (!poll) {
     return (

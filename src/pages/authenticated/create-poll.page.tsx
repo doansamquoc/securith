@@ -1,11 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { CreatePollForm } from "@/features/poll/components/create-poll-form";
 
-export const Route = createFileRoute("/_authenticated/create")({
-  component: CreatePollPageComponent,
-});
-
-function CreatePollPageComponent() {
+export default function CreatePollPage() {
   return (
     <div className="container mx-auto px-4 max-w-4xl py-10 space-y-6">
       <div className="flex items-center gap-4">

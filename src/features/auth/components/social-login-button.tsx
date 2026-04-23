@@ -3,6 +3,7 @@ import { useConnect } from "thirdweb/react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import { baseSepolia } from "thirdweb/chains";
 
 interface SocialLoginButtonProps {
   strategy: "google" | "apple" | any;
@@ -11,18 +12,17 @@ interface SocialLoginButtonProps {
 }
 
 const SocialLoginButton = ({ strategy, icon: Icon, className }: SocialLoginButtonProps) => {
-  const { connect, isConnecting } = useConnect();
+  const { isConnecting } = useConnect();
 
   async function handleLogin() {
     try {
-      await connect(async () => {
-        await wallet.connect({
-          client,
-          strategy: strategy,
-        });
-        toast.success("Đăng nhập thành công!");
-        return wallet;
+      await wallet.connect({
+        client,
+        strategy: strategy,
+        chain: baseSepolia,
+        mode: "redirect",
       });
+      toast.success("Đăng nhập thành công!");
     } catch (e) {
       toast.error("Đăng nhập thất bại, vui lòng thử lại.");
       console.error("Error login via " + strategy + ":", e);

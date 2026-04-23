@@ -1,4 +1,4 @@
-import { useActiveAccount, useActiveWallet, useDisconnect } from "thirdweb/react";
+import { useActiveAccount, useActiveWallet, useDisconnect, useWalletDetailsModal } from "thirdweb/react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -10,22 +10,19 @@ import {
   DropdownMenuTrigger,
   DropdownMenuPortal,
 } from "./ui/dropdown-menu";
-import { useUser } from "@/hooks/use-user";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useTheme } from "./theme-provider";
-import { IconChevronDown, IconLogout, IconMoon, IconSettings, IconSun, IconUserCircle } from "@tabler/icons-react";
-import { ShimmerSkeleton } from "./unlumen-ui/shimmer-skeleton";
+import { IconChevronDown, IconLogout, IconMoon, IconSettings, IconSun, IconUserCircle, IconWallet } from "@tabler/icons-react";
 import { shortenAddress } from "@/utils/utils";
 import CopyButton from "./copy-button";
+import { client } from "@/lib/thirdweb";
 
 const UserNav = () => {
+  const twModal = useWalletDetailsModal();
   const account = useActiveAccount();
   const wallet = useActiveWallet();
   const { disconnect } = useDisconnect();
-  const { isLoading } = useUser(account?.address);
   const { theme, setTheme } = useTheme();
-
-  if (isLoading) return <ShimmerSkeleton className="h-10 w-32 rounded-full" />;
 
   const address = account?.address || "";
 
@@ -64,7 +61,6 @@ const UserNav = () => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-
           <DropdownMenuGroup>
             {menuItems.map((item) => (
               <DropdownMenuItem key={item.label}>
@@ -72,8 +68,10 @@ const UserNav = () => {
                 <span>{item.label}</span>
               </DropdownMenuItem>
             ))}
+            <DropdownMenuItem onClick={() => twModal.open({ client, locale: "vi_VN", theme: theme === "dark" ? "dark" : "light" })}>
+              <IconWallet className="mr-2" /> Ví
+            </DropdownMenuItem>
           </DropdownMenuGroup>
-
           <DropdownMenuSeparator />
 
           <DropdownMenuGroup>

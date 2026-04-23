@@ -1,6 +1,6 @@
 import Logo from "@/components/logo";
 import UserNav from "@/components/user-nav";
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation } from "react-router-dom";
 import { useActiveAccount } from "thirdweb/react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter, SheetClose, SheetDescription } from "@/components/ui/sheet";

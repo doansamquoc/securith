@@ -1,18 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import Logo from "@/components/logo";
 import { IconArrowLeft, IconBrandApple, IconBrandFacebook, IconBrandGoogleFilled } from "@tabler/icons-react";
 import LoginForm from "@/features/auth/components/login-form";
 import { FieldGroup, FieldSeparator } from "@/components/ui/field";
 import SocialLoginButton from "@/features/auth/components/social-login-button";
 
-export const Route = createFileRoute("/_auth/login")({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
+export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-100">
