@@ -1,45 +1,29 @@
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MOCK_POLLS, MOCK_POLL_ANALYTICS, MOCK_VOTER_DETAILS, PollStatus } from "@/features/poll";
+import { PollResultVisibility, PollStatus } from "@/features/poll";
 import { PollDetailHeader } from "@/features/poll/components/poll-detail-header";
 import { PollVoteForm } from "@/features/poll/components/poll-vote-form";
-import { PollResults } from "@/features/poll/components/poll-results";
 import { Empty, EmptyContent, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { IconArrowLeft, IconCheck, IconDotsVertical, IconExternalLink, IconShare2, IconShieldCheck, IconUnlink } from "@tabler/icons-react";
 import SuccessAlert from "@/components/success-alert";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
+import { useGetPollDetails } from "@/features/poll/hooks/use-get-poll-details";
 
 export default function PollDetailPage() {
   const { pollId } = useParams();
 
-  // Find poll from mock data
-  const poll = MOCK_POLLS.find((p) => p.id === pollId);
-  const analytics = pollId ? MOCK_POLL_ANALYTICS[pollId] : undefined;
-  const voterDetails = pollId ? MOCK_VOTER_DETAILS[pollId] : undefined;
+  const { data: poll, isPending, error } = useGetPollDetails(pollId ? BigInt(pollId) : BigInt(0));
 
-  if (!poll) {
-    return (
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia>
-            <IconUnlink size={48} />
-          </EmptyMedia>
-          <EmptyTitle>Cuộc bầu chọn này không tồn tại</EmptyTitle>
-        </EmptyHeader>
-        <EmptyContent className="flex-row justify-center gap-2">
-          <Button size="sm" variant={"link"} asChild>
-            <Link to="/dashboard">
-              Quay lại Bảng Điều Khiển <IconExternalLink />
-            </Link>
-          </Button>
-        </EmptyContent>
-      </Empty>
-    );
+  console.log("Poll details data:", poll, "isPending:", isPending, "Error:", error);
+
+  if (isPending) {
+    return <span className="text-muted-foreground py-8 text-sm">Đang tải chi tiết cuộc bầu chọn...</span>;
   }
 
-  const hasVoted = voterDetails?.voted;
-  const canVote = poll.status === PollStatus.Active && !hasVoted;
+  if (!poll) {
+    return <div>Cuộc bầu chọn này không tồn tại</div>;
+  }
 
   const handleVote = (selectedOptions: number[]) => {
     console.log("Voting for options:", selectedOptions);
@@ -67,32 +51,20 @@ export default function PollDetailPage() {
       </div>
       <Card>
         <CardHeader>
-          <PollDetailHeader poll={poll} />
+          <PollDetailHeader poll={{ ...poll, settings: { ...poll.settings, resultVisibility: poll.settings.resultVisibility as PollResultVisibility } }} />
         </CardHeader>
         <CardContent>
           <div className="flex flex-col">
             <div className="md:col-span-8 space-y-4">
               <div className="">
-                <h3 className="text-md font-medium uppercase">{canVote ? "Lựa chọn của bạn" : "Kết quả"}</h3>
-                {canVote ?? <span className="text-muted-foreground text-xs">{poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}</span>}
+                <h3 className="text-md font-medium uppercase">{poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}</h3>
               </div>
-
-              {canVote ? (
-                <div className="space-y-6">
-                  <PollVoteForm poll={poll} onVote={handleVote} />
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {hasVoted && (
-                    <SuccessAlert
-                      icon={<IconCheck />}
-                      title="Đã Bầu Chọn"
-                      description="Bạn đã tham gia cuộc bầu chọn này. Phiếu bầu đã được ghi nhận trên chuỗi."
-                    />
-                  )}
-                  {analytics ? <PollResults analytics={analytics} /> : <p className="text-muted-foreground py-8 text-sm">Chưa có dữ liệu phân tích.</p>}
-                </div>
-              )}
+              <div className="space-y-6">
+                <PollVoteForm
+                  poll={{ ...poll, settings: { ...poll.settings, resultVisibility: poll.settings.resultVisibility as PollResultVisibility } }}
+                  onVote={handleVote}
+                />
+              </div>
             </div>
           </div>
         </CardContent>

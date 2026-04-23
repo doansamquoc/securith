@@ -46,6 +46,21 @@ export interface PollSummary {
   readonly createdAt: bigint;
 }
 
+export interface PollDetails {
+  creator: string;
+  title: string;
+  description: string;
+  startsAt: bigint;
+  endsAt: bigint;
+  options: readonly string[];
+  pollVotes: bigint;
+  status: number;
+  settings: PollSettings;
+  hasVoted: boolean;
+  votedIndices: readonly bigint[];
+  createdAt: bigint;
+}
+
 export interface PollResult {
   pollId: string;
   results: bigint[];

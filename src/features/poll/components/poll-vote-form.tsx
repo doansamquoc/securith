@@ -1,13 +1,14 @@
-import { type Poll } from "../types/types";
+import { PollResultVisibility, type PollDetails } from "../types/types";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel, FieldTitle } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { IconChartLine } from "@tabler/icons-react";
 
 interface PollVoteFormProps {
-  poll: Poll;
+  readonly poll: PollDetails;
   onVote: (selectedOptions: number[]) => void;
   isSubmitting?: boolean;
 }
@@ -60,7 +61,7 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
                       <RadioGroupItem value={index.toString()} id={`option-${index}`} />
                       <FieldContent>
                         <FieldTitle>{option}</FieldTitle>
-                        <FieldDescription>This is description for {option}</FieldDescription>
+                        {/* <FieldDescription>This is description for {option}</FieldDescription> */}
                       </FieldContent>
                     </Field>
                   </FieldLabel>
@@ -70,7 +71,7 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
           )}
         </form>
       </div>
-      <div>
+      <div className="flex flex-col md:flex-row gap-2">
         <Button form="vote-form" type="submit" disabled={selected.length === 0 || isSubmitting}>
           {isSubmitting ? (
             <>
@@ -81,6 +82,11 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
             "Gửi bình chọn của bạn"
           )}
         </Button>
+        {poll.settings.resultVisibility === PollResultVisibility.Always && (
+          <Button variant="outline">
+            <IconChartLine className="mr-2" /> Xem kết quả
+          </Button>
+        )}
       </div>
     </>
   );

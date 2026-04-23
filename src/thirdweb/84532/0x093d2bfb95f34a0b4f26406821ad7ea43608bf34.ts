@@ -256,6 +256,11 @@ export async function getPollDetails(
           "type": "uint256"
         },
         {
+          "internalType": "enum Polls.PollStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
           "components": [
             {
               "internalType": "bool",
