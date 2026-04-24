@@ -1,8 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShimmerSkeleton } from "@/components/unlumen-ui/shimmer-skeleton";
-import { Button } from "@/components/ui/button";
-import { Field, FieldContent, FieldGroup, FieldLabel, FieldTitle } from "@/components/ui/field";
+import { FieldGroup } from "@/components/ui/field";
 
 const PollDetailSkeleton = () => {
   return (
