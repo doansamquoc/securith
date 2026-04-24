@@ -1,88 +1,25 @@
-import { Link, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { PollResultVisibility } from "@/features/poll";
-import { PollDetailHeader } from "@/features/poll/components/poll-detail-header";
-import { PollVoteForm } from "@/features/poll/components/poll-vote-form";
-import { IconArrowLeft, IconDotsVertical, IconShare2, IconShieldCheck } from "@tabler/icons-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
+import { useParams } from "react-router-dom";
+import { PollResultVisibility, type PollDetails as PollDetailType } from "@/features/poll";
 import { useGetPollDetails } from "@/features/poll/hooks/use-get-poll-details";
+
+import PollDetails from "@/features/poll/components/poll-details";
+import PollDetailSkeleton from "@/features/poll/components/poll-detail-skeleton";
 
 export default function PollDetailPage() {
   const { pollId } = useParams();
 
-  const { data: poll, isPending, error } = useGetPollDetails(pollId ? BigInt(pollId) : BigInt(0));
-
-  console.log("Poll details data:", poll, "isPending:", isPending, "Error:", error);
-
-  if (isPending) {
-    return <span className="text-muted-foreground py-8 text-sm">Đang tải chi tiết cuộc bầu chọn...</span>;
-  }
+  const { data, isPending, error } = useGetPollDetails(pollId ? BigInt(pollId) : BigInt(0));
+  const poll = { ...data, settings: { ...data?.settings, resultVisibility: data?.settings.resultVisibility as PollResultVisibility } } as
+    | PollDetailType
+    | undefined;
 
   if (!poll) {
     return <div>Cuộc bầu chọn này không tồn tại</div>;
   }
 
-  const handleVote = (selectedOptions: number[]) => {
-    console.log("Voting for options:", selectedOptions);
-    // In reality, this would call the contract
-    alert(`Bạn đã bầu cho phương án: ${selectedOptions.map((i) => poll.options[i]).join(", ")}`);
-  };
+  if (error) {
+    return <div>Có lỗi xảy ra khi tải cuộc bầu chọn: {error.message}</div>;
+  }
 
-  return (
-    <div className="py-12 max-w-4xl mx-auto space-y-12 container px-4">
-      <div className="flex items-center justify-between">
-        <Button variant="secondary" size="default" asChild>
-          <Link to="/dashboard">
-            <IconArrowLeft /> Trở về
-          </Link>
-        </Button>
-        <ButtonGroup>
-          <Button variant="secondary">
-            <IconShare2 /> Chia sẻ
-          </Button>
-          <ButtonGroupSeparator />
-          <Button size="icon" variant="secondary">
-            <IconDotsVertical />
-          </Button>
-        </ButtonGroup>
-      </div>
-      <Card>
-        <CardHeader>
-          <PollDetailHeader poll={{ ...poll, settings: { ...poll.settings, resultVisibility: poll.settings.resultVisibility as PollResultVisibility } }} />
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col">
-            <div className="md:col-span-8 space-y-4">
-              <div className="">
-                <h3 className="text-md font-medium uppercase">{poll.settings.multiChoice ? "Chọn nhiều đáp án" : "Chọn một đáp án"}</h3>
-              </div>
-              <div className="space-y-6">
-                <PollVoteForm
-                  poll={{ ...poll, settings: { ...poll.settings, resultVisibility: poll.settings.resultVisibility as PollResultVisibility } }}
-                  onVote={handleVote}
-                />
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      <div className="md:col-span-4 space-y-8">
-        <div className="space-y-4">
-          <div className="p-4 rounded-xl border border-border/50 space-y-4 bg-muted/10">
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Mạng lưới</span>
-              <span className="text-sm font-medium flex items-center gap-1.5">
-                <IconShieldCheck className="h-3 w-3 text-primary" /> Base Sepolia
-              </span>
-            </div>
-            <div className="space-y-1 pt-2 border-t border-border/50">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground block">Smart Contract</span>
-              <span className="text-xs font-mono break-all text-muted-foreground">0x000000000000000000</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <div className="py-4 max-w-4xl mx-auto space-y-4 container px-4">{isPending ? <PollDetailSkeleton /> : <PollDetails poll={poll} />}</div>;
 }

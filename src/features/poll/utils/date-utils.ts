@@ -1,4 +1,4 @@
-import { formatDuration, intervalToDuration, type Locale } from "date-fns";
+import { formatDistance, formatDistanceToNow, formatDuration, intervalToDuration, type Locale } from "date-fns";
 import { vi } from "date-fns/locale";
 
 export function formatDurationUnits(duration: ReturnType<typeof intervalToDuration>) {
@@ -9,6 +9,22 @@ export function formatDurationUnits(duration: ReturnType<typeof intervalToDurati
   if (duration.hours) format.push("hours");
   if (duration.minutes) format.push("minutes");
   return format;
+}
+
+export function formatRelativeTime(date: Date, locale?: Locale) {
+  return formatDistanceToNow(date, {
+    addSuffix: true,
+    locale: locale ?? vi,
+  });
+}
+
+export function formatCountdown(to: Date, from?: Date, locale?: Locale) {
+  const now = from ?? new Date();
+  if (to < now) {
+    return "Đã kết thúc";
+  }
+  const distance = formatDistance(to, now, { locale: locale ?? vi });
+  return `${distance}`;
 }
 
 export function getFormattedDuration(from: Date, to: Date, locale?: Locale) {
@@ -35,15 +51,15 @@ export function formatDateTimeLocal(date: Date) {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
-export function toUnixBigInt(date: Date) {
+export function toBigInt(date: Date) {
   return BigInt(Math.floor(date.getTime() / 1000));
 }
 
-export function fromUnixBigInt(unix: bigint) {
+export function toDate(unix: bigint) {
   return new Date(Number(unix) * 1000);
 }
 
-export function formatUnixToVNDateString(unix: bigint) {
-  const date = fromUnixBigInt(unix);
-  return date.toLocaleDateString("vn", { day: "2-digit", month: "long", year: "numeric" });
+export function formatBigIntToDate(unix: bigint) {
+  const date = toDate(unix);
+  return date.toLocaleDateString("vn", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }

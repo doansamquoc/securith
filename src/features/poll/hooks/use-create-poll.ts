@@ -1,6 +1,6 @@
 import { useSendTransaction } from "thirdweb/react";
 import type { CreatePollInput } from "../schemas/create-poll.schema";
-import { toUnixBigInt } from "../utils/date-utils";
+import { toBigInt } from "../utils/date-utils";
 import { client, contract } from "@/lib/thirdweb";
 import { parseEventLogs, waitForReceipt } from "thirdweb";
 import { baseSepolia } from "thirdweb/chains";
@@ -13,8 +13,8 @@ export function useCreatePoll() {
       contract,
       title: data.title,
       desc: data.description ?? "",
-      startsAt: toUnixBigInt(data.startsAt),
-      endsAt: toUnixBigInt(data.endsAt),
+      startsAt: toBigInt(data.startsAt),
+      endsAt: toBigInt(data.endsAt),
       options: data.options.map((o) => o.value),
       settings: {
         multiChoice: data.settings.multiChoice,

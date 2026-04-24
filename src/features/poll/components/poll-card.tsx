@@ -2,7 +2,7 @@ import { PollStatusBadge } from "./poll-status-badge";
 import { Link } from "react-router-dom";
 import type { PollStatus, PollSummary } from "../types/types";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatUnixToVNDateString } from "../utils/date-utils";
+import { formatBigIntToDate } from "../utils/date-utils";
 import { shortenAddress } from "@/utils/utils";
 
 interface PollCardProps {
@@ -23,7 +23,7 @@ export function PollCard({ poll }: PollCardProps) {
               <div className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground uppercase font-bold tracking-tight">
                 <span>Bởi {shortenAddress(poll.creator)}</span>
                 <div className="hidden sm:block">|</div>
-                <span>Lúc {formatUnixToVNDateString(poll.startsAt)}</span>
+                <span>Lúc {formatBigIntToDate(poll.startsAt)}</span>
               </div>
             </div>
           </div>

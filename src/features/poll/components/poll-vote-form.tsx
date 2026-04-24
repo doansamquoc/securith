@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel, FieldTitle } from "@/components/ui/field";
+import { Field, FieldContent, FieldGroup, FieldLabel, FieldTitle } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { IconChartLine } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 interface PollVoteFormProps {
   readonly poll: PollDetails;
@@ -33,44 +34,42 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
 
   return (
     <>
-      <div>
-        <form id="vote-form" onSubmit={handleSubmit} className="space-y-4">
-          {poll.settings.multiChoice ? (
-            <FieldGroup className="gap-4">
-              {poll.options.map((option, index) => {
-                const isSelected = selected.includes(index);
-                return (
-                  <FieldLabel key={index}>
-                    <Field orientation="horizontal">
-                      <Checkbox id={`option-${index}`} checked={isSelected} onCheckedChange={() => handleToggle(index)} />
-                      <FieldContent>
-                        <FieldTitle>{option}</FieldTitle>
-                        <FieldDescription>This is description for {option}</FieldDescription>
-                      </FieldContent>
-                    </Field>
-                  </FieldLabel>
-                );
-              })}
-            </FieldGroup>
-          ) : (
-            <RadioGroup value={selected[0]?.toString()} onValueChange={(val) => setSelected([parseInt(val)])} className="gap-4">
-              {poll.options.map((option, index) => {
-                return (
-                  <FieldLabel key={index}>
-                    <Field orientation="horizontal">
-                      <RadioGroupItem value={index.toString()} id={`option-${index}`} />
-                      <FieldContent>
-                        <FieldTitle>{option}</FieldTitle>
-                        {/* <FieldDescription>This is description for {option}</FieldDescription> */}
-                      </FieldContent>
-                    </Field>
-                  </FieldLabel>
-                );
-              })}
-            </RadioGroup>
-          )}
-        </form>
-      </div>
+      <form id="vote-form" onSubmit={handleSubmit} className="space-y-4">
+        {poll.settings.multiChoice ? (
+          <FieldGroup className="gap-4">
+            {poll.options.map((option, index) => {
+              const isSelected = selected.includes(index);
+              return (
+                <FieldLabel key={index}>
+                  <Field orientation="horizontal">
+                    <Checkbox id={`option-${index}`} checked={isSelected} onCheckedChange={() => handleToggle(index)} />
+                    <FieldContent>
+                      <FieldTitle>{option}</FieldTitle>
+                      {/* <FieldDescription>This is description for {option}</FieldDescription> */}
+                    </FieldContent>
+                  </Field>
+                </FieldLabel>
+              );
+            })}
+          </FieldGroup>
+        ) : (
+          <RadioGroup value={selected[0]?.toString()} onValueChange={(val) => setSelected([parseInt(val)])} className="gap-4">
+            {poll.options.map((option, index) => {
+              return (
+                <FieldLabel key={index}>
+                  <Field orientation="horizontal">
+                    <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                    <FieldContent>
+                      <FieldTitle>{option}</FieldTitle>
+                      {/* <FieldDescription>This is description for {option}</FieldDescription> */}
+                    </FieldContent>
+                  </Field>
+                </FieldLabel>
+              );
+            })}
+          </RadioGroup>
+        )}
+      </form>
       <div className="flex flex-col md:flex-row gap-2">
         <Button form="vote-form" type="submit" disabled={selected.length === 0 || isSubmitting}>
           {isSubmitting ? (
@@ -83,8 +82,10 @@ export function PollVoteForm({ poll, onVote, isSubmitting }: PollVoteFormProps) 
           )}
         </Button>
         {poll.settings.resultVisibility === PollResultVisibility.Always && (
-          <Button variant="outline">
-            <IconChartLine className="mr-2" /> Xem kết quả
+          <Button variant="outline" asChild>
+            <Link to="results">
+              <IconChartLine className="mr-2" /> Xem kết quả
+            </Link>
           </Button>
         )}
       </div>
