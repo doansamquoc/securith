@@ -10,7 +10,7 @@ import PollFilter from "./poll-filter";
 import PollCardSkeleton from "./poll-card-skeleton";
 
 interface PollListProps {
-  readonly polls?: PollSummary[];
+  readonly polls: PollSummary[];
   readonly isPending?: boolean;
   readonly error?: Error;
 }

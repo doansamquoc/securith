@@ -38,7 +38,7 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold tracking-tight uppercase">Danh sách cuộc bầu chọn</h2>
           <p className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Danh sách các cuộc bầu chọn của bạn đã tạo hoặc đã tham gia.</p>
         </div>
-        <PollList polls={polls ? [...polls] : []} isPending={isPending} error={error!} />
+        <PollList polls={[...(polls || [])]} isPending={isPending} error={error!} />
       </div>
     </div>
   );

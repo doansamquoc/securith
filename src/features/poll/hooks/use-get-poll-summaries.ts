@@ -7,7 +7,7 @@ export function useGetPollSummaries() {
   const { data, isPending, error } = useReadContract({
     contract,
     method:
-      "function getPollSummaries() view returns ((address creator, uint256 id, string title, uint256 participants, uint8 status, uint256 startsAt, uint256 endsAt, uint256 createdAt)[])",
+      "function getPollSummaries() view returns ((address creator, uint256 id, string title, uint256 participants, uint256 totalVotes, uint8 status, uint256 startsAt, uint256 endsAt, uint256 createdAt)[])",
     params: [],
     queryOptions: {
       enabled: !!account?.address,
