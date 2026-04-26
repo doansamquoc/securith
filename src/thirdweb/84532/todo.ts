@@ -433,6 +433,11 @@ export async function getPollSummaries(
           "type": "uint256"
         },
         {
+          "internalType": "uint256",
+          "name": "totalVotes",
+          "type": "uint256"
+        },
+        {
           "internalType": "enum Polls.Status",
           "name": "status",
           "type": "uint8"

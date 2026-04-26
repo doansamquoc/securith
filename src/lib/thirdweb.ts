@@ -33,7 +33,7 @@ export const smart = smartWallet({ chain: baseSepolia, sponsorGas: true });
 export const contract = getContract({
   client,
   chain: baseSepolia,
-  address: "0xa66eedfe8596f8a6a0a13ebaf81e5476bbccc86f",
+  address: "0x0b82da3efaefece02395d3bee065f3a951be2af8",
 });
 
 export const personalAccount = await generateAccount({

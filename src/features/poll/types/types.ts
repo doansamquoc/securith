@@ -42,6 +42,7 @@ export interface PollSummary {
   id: bigint;
   title: string;
   participants: bigint;
+  totalVotes: bigint;
   status: number;
   startsAt: bigint;
   endsAt: bigint;

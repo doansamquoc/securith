@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { createPollSchema, defaultValues, type CreatePollInput } from "../schemas/create-poll.schema";
-import { Spinner } from "@/components/ui/spinner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -18,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function CreatePollForm() {
   const navigate = useNavigate();
