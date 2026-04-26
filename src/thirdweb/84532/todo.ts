@@ -83,6 +83,42 @@ export function pollCreatedEvent(filters: PollCreatedEventFilters = {}) {
   
 
 /**
+ * Represents the filters for the "PollDeleted" event.
+ */
+export type PollDeletedEventFilters = Partial<{
+  creator: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"address","name":"creator","type":"address"}>
+pollId: AbiParameterToPrimitiveType<{"indexed":true,"internalType":"uint256","name":"pollId","type":"uint256"}>
+}>;
+
+/**
+ * Creates an event object for the PollDeleted event.
+ * @param filters - Optional filters to apply to the event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { pollDeletedEvent } from "TODO";
+ *
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  pollDeletedEvent({
+ *  creator: ...,
+ *  pollId: ...,
+ * })
+ * ],
+ * });
+ * ```
+ */
+export function pollDeletedEvent(filters: PollDeletedEventFilters = {}) {
+  return prepareEvent({
+    signature: "event PollDeleted(address indexed creator, uint256 indexed pollId)",
+    filters,
+  });
+};
+  
+
+/**
  * Represents the filters for the "VoteCast" event.
  */
 export type VoteCastEventFilters = Partial<{
@@ -121,66 +157,10 @@ export function voteCastEvent(filters: VoteCastEventFilters = {}) {
 */
 
 /**
- * Represents the parameters for the "UserPolls" function.
- */
-export type UserPollsParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"address","name":"","type":"address"}>
-arg_1: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
-};
-
-/**
- * Calls the "UserPolls" function on the contract.
- * @param options - The options for the UserPolls function.
- * @returns The parsed result of the function call.
- * @example
- * ```
- * import { UserPolls } from "TODO";
- *
- * const result = await UserPolls({
- *  arg_0: ...,
- *  arg_1: ...,
- * });
- *
- * ```
- */
-export async function UserPolls(
-  options: BaseTransactionOptions<UserPollsParams>
-) {
-  return readContract({
-    contract: options.contract,
-    method: [
-  "0x1994a615",
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: [options.arg_0, options.arg_1]
-  });
-};
-
-
-/**
  * Represents the parameters for the "getPollDetails" function.
  */
 export type GetPollDetailsParams = {
-  voter: AbiParameterToPrimitiveType<{"internalType":"address","name":"_voter","type":"address"}>
-pollId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_pollId","type":"uint256"}>
+  pollId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_pollId","type":"uint256"}>
 };
 
 /**
@@ -192,7 +172,6 @@ pollId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_pollId","
  * import { getPollDetails } from "TODO";
  *
  * const result = await getPollDetails({
- *  voter: ...,
  *  pollId: ...,
  * });
  *
@@ -204,13 +183,8 @@ export async function getPollDetails(
   return readContract({
     contract: options.contract,
     method: [
-  "0x1e25e730",
+  "0x9a0040e4",
   [
-    {
-      "internalType": "address",
-      "name": "_voter",
-      "type": "address"
-    },
     {
       "internalType": "uint256",
       "name": "_pollId",
@@ -252,11 +226,16 @@ export async function getPollDetails(
         },
         {
           "internalType": "uint256",
-          "name": "pollVotes",
+          "name": "participants",
           "type": "uint256"
         },
         {
-          "internalType": "enum Polls.PollStatus",
+          "internalType": "uint256",
+          "name": "totalVotes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum Polls.Status",
           "name": "status",
           "type": "uint8"
         },
@@ -273,12 +252,12 @@ export async function getPollDetails(
               "type": "bool"
             },
             {
-              "internalType": "enum Polls.PollResultVisibility",
+              "internalType": "enum Polls.ResultVisibility",
               "name": "resultVisibility",
               "type": "uint8"
             }
           ],
-          "internalType": "struct Polls.PollSettings",
+          "internalType": "struct Polls.Settings",
           "name": "settings",
           "type": "tuple"
         },
@@ -298,13 +277,13 @@ export async function getPollDetails(
           "type": "uint256"
         }
       ],
-      "internalType": "struct Polls.PollDetails",
+      "internalType": "struct Polls.Details",
       "name": "",
       "type": "tuple"
     }
   ]
 ],
-    params: [options.voter, options.pollId]
+    params: [options.pollId]
   });
 };
 
@@ -355,8 +334,23 @@ export async function getPollResults(
     {
       "components": [
         {
+          "internalType": "string",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "creator",
+          "type": "address"
+        },
+        {
           "internalType": "uint256",
-          "name": "pollVotes",
+          "name": "participants",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalVotes",
           "type": "uint256"
         },
         {
@@ -368,16 +362,21 @@ export async function getPollResults(
             },
             {
               "internalType": "uint256",
-              "name": "votes",
+              "name": "totalVotes",
               "type": "uint256"
             }
           ],
           "internalType": "struct Polls.OptionResult[]",
           "name": "optionsResult",
           "type": "tuple[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "createdAt",
+          "type": "uint256"
         }
       ],
-      "internalType": "struct Polls.PollResults",
+      "internalType": "struct Polls.Result",
       "name": "",
       "type": "tuple"
     }
@@ -388,12 +387,7 @@ export async function getPollResults(
 };
 
 
-/**
- * Represents the parameters for the "getPollSummaries" function.
- */
-export type GetPollSummariesParams = {
-  user: AbiParameterToPrimitiveType<{"internalType":"address","name":"_user","type":"address"}>
-};
+
 
 /**
  * Calls the "getPollSummaries" function on the contract.
@@ -403,26 +397,18 @@ export type GetPollSummariesParams = {
  * ```
  * import { getPollSummaries } from "TODO";
  *
- * const result = await getPollSummaries({
- *  user: ...,
- * });
+ * const result = await getPollSummaries();
  *
  * ```
  */
 export async function getPollSummaries(
-  options: BaseTransactionOptions<GetPollSummariesParams>
+  options: BaseTransactionOptions
 ) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x9137b2e9",
-  [
-    {
-      "internalType": "address",
-      "name": "_user",
-      "type": "address"
-    }
-  ],
+  "0xdfcaab88",
+  [],
   [
     {
       "components": [
@@ -443,11 +429,11 @@ export async function getPollSummaries(
         },
         {
           "internalType": "uint256",
-          "name": "pollVotes",
+          "name": "participants",
           "type": "uint256"
         },
         {
-          "internalType": "enum Polls.PollStatus",
+          "internalType": "enum Polls.Status",
           "name": "status",
           "type": "uint8"
         },
@@ -467,123 +453,73 @@ export async function getPollSummaries(
           "type": "uint256"
         }
       ],
-      "internalType": "struct Polls.PollSummary[]",
+      "internalType": "struct Polls.Summary[]",
       "name": "",
       "type": "tuple[]"
     }
   ]
 ],
-    params: [options.user]
+    params: []
   });
 };
 
 
 /**
- * Represents the parameters for the "polls" function.
+ * Represents the parameters for the "getUserStats" function.
  */
-export type PollsParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+export type GetUserStatsParams = {
+  user: AbiParameterToPrimitiveType<{"internalType":"address","name":"_user","type":"address"}>
 };
 
 /**
- * Calls the "polls" function on the contract.
- * @param options - The options for the polls function.
+ * Calls the "getUserStats" function on the contract.
+ * @param options - The options for the getUserStats function.
  * @returns The parsed result of the function call.
  * @example
  * ```
- * import { polls } from "TODO";
+ * import { getUserStats } from "TODO";
  *
- * const result = await polls({
- *  arg_0: ...,
+ * const result = await getUserStats({
+ *  user: ...,
  * });
  *
  * ```
  */
-export async function polls(
-  options: BaseTransactionOptions<PollsParams>
+export async function getUserStats(
+  options: BaseTransactionOptions<GetUserStatsParams>
 ) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xac2f0074",
+  "0x4e43603a",
   [
     {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
+      "internalType": "address",
+      "name": "_user",
+      "type": "address"
     }
   ],
   [
     {
-      "internalType": "address",
-      "name": "creator",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "id",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "title",
-      "type": "string"
-    },
-    {
-      "internalType": "string",
-      "name": "description",
-      "type": "string"
-    },
-    {
-      "internalType": "uint256",
-      "name": "startsAt",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "endsAt",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "pollVotes",
-      "type": "uint256"
-    },
-    {
       "components": [
         {
-          "internalType": "bool",
-          "name": "multiChoice",
-          "type": "bool"
+          "internalType": "uint256",
+          "name": "totalPollsCreated",
+          "type": "uint256"
         },
         {
-          "internalType": "bool",
-          "name": "noDeadline",
-          "type": "bool"
-        },
-        {
-          "internalType": "enum Polls.PollResultVisibility",
-          "name": "resultVisibility",
-          "type": "uint8"
+          "internalType": "uint256",
+          "name": "totalVotesReceived",
+          "type": "uint256"
         }
       ],
-      "internalType": "struct Polls.PollSettings",
-      "name": "settings",
+      "internalType": "struct Polls.UserStats",
+      "name": "",
       "type": "tuple"
-    },
-    {
-      "internalType": "uint256",
-      "name": "createdAt",
-      "type": "uint256"
-    },
-    {
-      "internalType": "bool",
-      "name": "isDeleted",
-      "type": "bool"
     }
   ]
 ],
-    params: [options.arg_0]
+    params: [options.user]
   });
 };
 
@@ -698,7 +634,7 @@ desc: AbiParameterToPrimitiveType<{"internalType":"string","name":"_desc","type"
 startsAt: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_startsAt","type":"uint256"}>
 endsAt: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_endsAt","type":"uint256"}>
 options: AbiParameterToPrimitiveType<{"internalType":"string[]","name":"_options","type":"string[]"}>
-settings: AbiParameterToPrimitiveType<{"components":[{"internalType":"bool","name":"multiChoice","type":"bool"},{"internalType":"bool","name":"noDeadline","type":"bool"},{"internalType":"enum Polls.PollResultVisibility","name":"resultVisibility","type":"uint8"}],"internalType":"struct Polls.PollSettings","name":"_settings","type":"tuple"}>
+settings: AbiParameterToPrimitiveType<{"components":[{"internalType":"bool","name":"multiChoice","type":"bool"},{"internalType":"bool","name":"noDeadline","type":"bool"},{"internalType":"enum Polls.ResultVisibility","name":"resultVisibility","type":"uint8"}],"internalType":"struct Polls.Settings","name":"_settings","type":"tuple"}>
 };
 
 /**
@@ -769,12 +705,12 @@ export function createPoll(
           "type": "bool"
         },
         {
-          "internalType": "enum Polls.PollResultVisibility",
+          "internalType": "enum Polls.ResultVisibility",
           "name": "resultVisibility",
           "type": "uint8"
         }
       ],
-      "internalType": "struct Polls.PollSettings",
+      "internalType": "struct Polls.Settings",
       "name": "_settings",
       "type": "tuple"
     }

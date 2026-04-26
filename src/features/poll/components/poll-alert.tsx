@@ -18,7 +18,7 @@ const PollAlert = ({ poll }: PollAlertProps) => {
     [PollStatus.NotStarted]: `Sẽ bắt đầu sau ${formatCountdown(toDate(poll.startsAt))}`,
     [PollStatus.Active]: `Sẽ kết thúc sau ${formatCountdown(toDate(poll.endsAt))}`,
     [PollStatus.Ended]: `Đã kết thúc vào ${formatBigIntToDate(poll.endsAt)}`,
-    [PollStatus.Cancelled]: `Đã bị hủy vào ${formatBigIntToDate(poll.endsAt)}`,
+    [PollStatus.Cancelled]: `Cuộc bầu chọn này đã bị đóng bởi tác giả`,
   };
 
   const variants = {

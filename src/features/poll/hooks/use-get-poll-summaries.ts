@@ -1,19 +1,20 @@
 import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { contract } from "@/lib/thirdweb";
-import { getPollSummaries } from "@/thirdweb/84532/0x093d2bfb95f34a0b4f26406821ad7ea43608bf34";
 
 export function useGetPollSummaries() {
   const account = useActiveAccount();
 
-  const { data, isPending, error } = useReadContract(getPollSummaries, {
+  const { data, isPending, error } = useReadContract({
     contract,
-    user: account?.address ?? "",
+    method:
+      "function getPollSummaries() view returns ((address creator, uint256 id, string title, uint256 participants, uint8 status, uint256 startsAt, uint256 endsAt, uint256 createdAt)[])",
+    params: [],
     queryOptions: {
       enabled: !!account?.address,
       refetchInterval: 30 * 1000,
       retry: 1,
     },
+    from: account?.address,
   });
-
   return { data, isPending, error };
 }

@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Controller, type UseFormReturn } from "react-hook-form";
 import type { CreatePollInput } from "../schemas/create-poll.schema";
-import { formatDateTimeLocal, getFormattedDuration } from "../utils/date-utils";
+import { formatDateTimeLocal } from "../utils/date-utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import React from "react";
@@ -15,13 +15,6 @@ interface SettingSectionProps {
 
 const SettingSection = ({ form }: SettingSectionProps) => {
   const noDeadline = form.watch("settings.noDeadline");
-  const [startsAt, endsAt] = form.watch(["startsAt", "endsAt"]);
-
-  const startAfterDurationText = startsAt && getFormattedDuration(new Date(), startsAt);
-  const endAfterDurationText = getFormattedDuration(startsAt, endsAt);
-
-  /* When enable the `No deadline` and result visibility is visible after end.
-      We have to disable the visible after end rule and update the value to `0`*/
   React.useEffect(() => {
     if (noDeadline && form.getValues("settings.resultVisibility") === 2) {
       form.setValue("settings.resultVisibility", 0);
@@ -43,7 +36,6 @@ const SettingSection = ({ form }: SettingSectionProps) => {
                 <Field>
                   <FieldLabel htmlFor="startsAt">Bắt đầu</FieldLabel>
                   <Input type="datetime-local" value={formatDateTimeLocal(field.value)} onChange={(e) => field.onChange(new Date(e.target.value))} />
-                  {startAfterDurationText ?? <FieldDescription className="text-xs font-semibold">{startAfterDurationText}</FieldDescription>}
                   {fieldState.error && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
@@ -61,10 +53,6 @@ const SettingSection = ({ form }: SettingSectionProps) => {
                     value={formatDateTimeLocal(field.value)}
                     onChange={(e) => field.onChange(new Date(e.target.value))}
                   />
-                  {endAfterDurationText ?? (
-                    <FieldDescription className="text-xs font-semibold">{noDeadline ? "Không có thời hạn" : endAfterDurationText}</FieldDescription>
-                  )}
-
                   {fieldState.error && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}

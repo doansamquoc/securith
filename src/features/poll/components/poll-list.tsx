@@ -32,7 +32,7 @@ export function PollList({ polls, isPending, error }: PollListProps) {
     result.sort((a, b) => {
       if (sortBy === "newest") return Number(b.startsAt - a.startsAt);
       if (sortBy === "oldest") return Number(a.startsAt - b.startsAt);
-      if (sortBy === "most-voted") return Number(b.pollVotes - a.pollVotes);
+      if (sortBy === "most-voted") return Number(b.totalVotes - a.totalVotes);
       return 0;
     });
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PollResultVisibility } from "../types/types";
+import { ResultVisibility } from "../types/types";
 
 export const createPollSchema = z
   .object({
@@ -23,7 +23,7 @@ export const createPollSchema = z
     settings: z.object({
       multiChoice: z.boolean(),
       noDeadline: z.boolean(),
-      resultVisibility: z.nativeEnum(PollResultVisibility),
+      resultVisibility: z.nativeEnum(ResultVisibility),
     }),
   })
   .refine((data) => data.startsAt.getTime() >= Date.now() - 60000, {

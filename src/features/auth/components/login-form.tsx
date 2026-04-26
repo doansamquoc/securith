@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { useConnect } from "thirdweb/react";
+import { baseSepolia } from "thirdweb/chains";
 
 const LoginForm = () => {
   const { connect, isConnecting, cancelConnection } = useConnect();
@@ -47,6 +48,7 @@ const LoginForm = () => {
             strategy: "email",
             email: form.getValues("email"),
             verificationCode: otp,
+            chain: baseSepolia,
           });
 
           setInvalidOtp(false);

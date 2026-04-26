@@ -10,7 +10,6 @@ function DelayedSpinner() {
   const [show, setShow] = React.useState(false);
 
   React.useEffect(() => {
-    // Chỉ hiện Spinner nếu thời gian load quá 150ms
     const timer = setTimeout(() => setShow(true), 150);
     return () => clearTimeout(timer);
   }, []);
@@ -54,7 +53,7 @@ export default function RootLayout() {
   return (
     <React.Fragment>
       <Outlet />
-      <Toaster position="top-center" theme="system" />
+      <Toaster position="bottom-right" theme="system" />
     </React.Fragment>
   );
 }

@@ -4,16 +4,16 @@ import { toBigInt } from "../utils/date-utils";
 import { client, contract } from "@/lib/thirdweb";
 import { parseEventLogs, waitForReceipt } from "thirdweb";
 import { baseSepolia } from "thirdweb/chains";
-import { createPoll, pollCreatedEvent } from "@/thirdweb/84532/0x093d2bfb95f34a0b4f26406821ad7ea43608bf34";
+import { createPoll, pollCreatedEvent } from "@/thirdweb/84532/todo";
 
 export function useCreatePoll() {
   const { mutateAsync: send } = useSendTransaction({ payModal: false });
-  async function execute(data: CreatePollInput): Promise<String | undefined> {
+  async function execute(data: CreatePollInput): Promise<string | undefined> {
     const transaction = createPoll({
       contract,
       title: data.title,
       desc: data.description ?? "",
-      startsAt: toBigInt(data.startsAt),
+      startsAt: toBigInt(data.startsAt) + 60n, // Depleyed 1 munite
       endsAt: toBigInt(data.endsAt),
       options: data.options.map((o) => o.value),
       settings: {

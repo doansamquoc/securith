@@ -1,3 +1,4 @@
+import { bigint } from "zod";
 import { type Poll, PollStatus, type PollResult, type PollWinner, type VoterDetails, type PollAnalytics, type UserStats } from "./types/types";
 
 const MOCK_CREATOR = "0x1234567890123456789012345678901234567890";
@@ -175,10 +176,4 @@ export const MOCK_POLL_ANALYTICS: Record<string, PollAnalytics> = {
       { option: "Angular 20", votes: BigInt(20), percentage: 4.44 },
     ],
   },
-};
-
-export const MOCK_USER_STATS: UserStats = {
-  address: MOCK_CREATOR,
-  pollsCreated: 123,
-  totalVotesReceived: 12312312,
 };
