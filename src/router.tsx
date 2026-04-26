@@ -11,7 +11,6 @@ import LoginPage from "./pages/auth/login.page";
 import DashboardPage from "./pages/authenticated/dashboard.page";
 import CreatePollPage from "./pages/authenticated/create-poll.page";
 import PollDetailPage from "./pages/authenticated/poll-detail.page";
-import AnalyticsPage from "./pages/authenticated/analytics.page";
 import PollResultPage from "./pages/authenticated/poll-result.page";
 
 export const routes = [
@@ -49,10 +48,6 @@ export const routes = [
           {
             path: "polls/:pollId/results",
             element: <PollResultPage />,
-          },
-          {
-            path: "analytics",
-            element: <AnalyticsPage />,
           },
         ],
       },
